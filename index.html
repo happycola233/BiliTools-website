@@ -1,0 +1,938 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f8f9ff" />
+    <meta
+      name="description"
+      content="BiliTools 是免费开源的 Android 哔哩哔哩解析与下载工具。保存视频、番剧、音乐与图文，自选音画质，导出字幕和弹幕。探索真实界面并下载最新 APK。"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="BiliTools · 把喜欢的，留在身边" />
+    <meta
+      property="og:description"
+      content="从一条链接开始，收藏视频、番剧、音乐与图文。免费开源，为 Android 而生。"
+    />
+    <meta property="og:locale" content="zh_CN" />
+    <title>BiliTools · 把喜欢的，留在身边</title>
+    <link rel="icon" type="image/png" href="./assets/icon.png" />
+    <link
+      rel="preload"
+      href="./assets/google-sans-flex.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="./src/styles.css" />
+    <script>
+      // 在首屏绘制前恢复明暗偏好；存储不可用时继续跟随系统。
+      try {
+        const theme = localStorage.getItem('bilitools-theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+    <script type="module" src="./src/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="reading-progress" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="BiliTools 首页">
+        <img src="./assets/icon.png" alt="" width="40" height="40" />
+        <span>BiliTools</span>
+      </a>
+      <nav class="main-nav" aria-label="主要导航">
+        <a href="#features">功能</a>
+        <a href="#screenshots">界面</a>
+        <a href="#download">下载</a>
+      </nav>
+      <div class="header-actions">
+        <button
+          class="icon-button theme-toggle"
+          type="button"
+          aria-label="切换为深色模式"
+          title="切换为深色模式"
+          hidden
+        >
+          <svg class="icon theme-moon" aria-hidden="true">
+            <use href="./assets/icons.svg#moon"></use>
+          </svg>
+          <svg class="icon theme-sun" aria-hidden="true">
+            <use href="./assets/icons.svg#sun"></use>
+          </svg>
+        </button>
+        <a
+          class="header-github"
+          href="https://github.com/happycola233/BiliTools"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="在 GitHub 查看 BiliTools 源码（新标签页）"
+        >
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"></use></svg>
+          <span>GitHub</span>
+          <svg class="icon small" aria-hidden="true">
+            <use href="./assets/icons.svg#external"></use>
+          </svg>
+        </a>
+      </div>
+    </header>
+
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <main id="main">
+          <section class="hero section-shell" aria-labelledby="hero-heading">
+            <div class="hero-copy">
+              <p class="eyebrow"><span class="status-dot"></span> 免费开源 · 为 Android 而生</p>
+              <p class="hero-wordmark" aria-hidden="true">BiliTools</p>
+              <h1 id="hero-heading">
+                把喜欢的<span class="title-punctuation">，</span><br />留在<span class="title-accent"
+                  >身边<svg viewBox="0 0 220 16" fill="none" aria-hidden="true">
+                    <path d="M5 11C56 1 130 2 215 9" /></svg></span
+                ><span class="title-punctuation">。</span>
+              </h1>
+              <p class="hero-description">
+                喜欢的视频、想听的音乐、值得再读的图文。<br />用 BiliTools
+                保存下来，想看时随时打开。
+              </p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#download"
+                  ><svg class="icon" aria-hidden="true">
+                    <use href="./assets/icons.svg#download"></use></svg
+                  >下载 BiliTools</a
+                >
+                <a class="button button-text" href="#screenshots"
+                  >看看应用界面<svg class="icon" aria-hidden="true">
+                    <use href="./assets/icons.svg#arrow"></use></svg
+                ></a>
+              </div>
+              <p class="hero-requirement">Android 10 及以上 <span>·</span> GPL-3.0 开源协议</p>
+            </div>
+            <div
+              class="hero-visual"
+              role="group"
+              aria-label="BiliTools 番剧解析、下载选项和下载管理界面"
+            >
+              <div class="hero-backdrop" aria-hidden="true"></div>
+              <div class="phone hero-phone-options">
+                <picture>
+                  <source
+                    data-theme-source
+                    media="(prefers-color-scheme: dark)"
+                    srcset="./assets/screens/options-dark.webp"
+                  />
+                  <img
+                    src="./assets/screens/options-light.webp"
+                    alt="下载选项中选择画质、音质、字幕和弹幕"
+                    width="720"
+                    height="1600"
+                    fetchpriority="low"
+                  />
+                </picture>
+              </div>
+              <div class="phone hero-phone-series">
+                <picture>
+                  <source
+                    data-theme-source
+                    media="(prefers-color-scheme: dark)"
+                    srcset="./assets/screens/series-dark.webp"
+                  />
+                  <img
+                    src="./assets/screens/series-light.webp"
+                    alt="番剧解析页面，可查看作品信息并批量选择剧集"
+                    width="720"
+                    height="1600"
+                    fetchpriority="high"
+                  />
+                </picture>
+              </div>
+              <div class="phone hero-phone-download">
+                <picture>
+                  <source
+                    data-theme-source
+                    media="(prefers-color-scheme: dark)"
+                    srcset="./assets/screens/download-dark.webp"
+                  />
+                  <img
+                    src="./assets/screens/download-light.webp"
+                    alt="下载任务按作品分组，显示实时进度并支持暂停和恢复"
+                    width="720"
+                    height="1600"
+                    fetchpriority="low"
+                  />
+                </picture>
+              </div>
+            </div>
+            <a class="scroll-cue" href="#features"
+              ><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#down"></use></svg
+              >往下看看</a
+            >
+          </section>
+
+          <section
+            id="features"
+            class="story-section section-shell"
+            aria-labelledby="features-heading"
+          >
+            <div class="story-stage">
+              <div class="story-intro">
+                <p class="eyebrow section-eyebrow">从喜欢，到收藏</p>
+                <h2 id="features-heading">三步，收好每一份喜欢。</h2>
+                <p>粘贴链接，选择内容，再下载到手机。</p>
+              </div>
+              <div class="story-tabs" role="tablist" aria-label="了解下载的三个步骤" hidden>
+                <button
+                  id="story-tab-0"
+                  type="button"
+                  role="tab"
+                  aria-controls="story-panel-0"
+                  aria-selected="true"
+                  tabindex="0"
+                >
+                  <span>01</span>解析链接
+                </button>
+                <button
+                  id="story-tab-1"
+                  type="button"
+                  role="tab"
+                  aria-controls="story-panel-1"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  <span>02</span>挑选内容
+                </button>
+                <button
+                  id="story-tab-2"
+                  type="button"
+                  role="tab"
+                  aria-controls="story-panel-2"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  <span>03</span>保存收藏
+                </button>
+              </div>
+              <div class="story-panels">
+                <article class="story-chapter" id="story-panel-0" aria-labelledby="parse-heading">
+                  <div class="story-copy">
+                    <p class="story-kicker"><span>01</span> 解析链接</p>
+                    <h3 id="parse-heading">粘贴链接，找到想下载的内容。</h3>
+                    <p class="story-description">
+                      复制视频、番剧、课程、音乐或专栏的链接，粘贴到
+                      BiliTools，即可查看内容并选择要下载的项目。
+                    </p>
+                    <ul class="story-details">
+                      <li>
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#share"></use></svg
+                        >也可通过其他应用的「分享」菜单导入
+                      </li>
+                      <li>
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#check"></use></svg
+                        >支持链接，也支持 AV、BV 等编号
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="story-media">
+                    <figure class="phone story-phone">
+                      <picture
+                        ><source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="./assets/screens/series-dark.webp" />
+                        <img
+                          src="./assets/screens/series-light.webp"
+                          alt="解析番剧链接后，查看作品信息并勾选剧集"
+                          width="720"
+                          height="1600"
+                          loading="lazy"
+                          decoding="async"
+                      /></picture>
+                    </figure>
+                  </div>
+                </article>
+                <article class="story-chapter" id="story-panel-1" aria-labelledby="choose-heading">
+                  <div class="story-copy">
+                    <p class="story-kicker"><span>02</span> 挑选内容</p>
+                    <h3 id="choose-heading">画质、音质，按你喜欢。</h3>
+                    <p class="story-description">
+                      想看得更清楚，还是只想听声音？按需选择画质、音质和格式，再把字幕、弹幕与封面一起收好。
+                    </p>
+                    <ul class="story-details">
+                      <li>
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#quality"></use></svg
+                        >最高 8K 画质，支持 Hi-Res 音频
+                      </li>
+                      <li>
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#subtitle"></use></svg
+                        >字幕、弹幕、AI 总结与元数据按需导出
+                      </li>
+                    </ul>
+                    <p class="story-note">可用音画质取决于内容本身及你的账号权限。</p>
+                  </div>
+                  <div class="story-media">
+                    <figure class="phone story-phone">
+                      <picture
+                        ><source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="./assets/screens/options-dark.webp" />
+                        <img
+                          src="./assets/screens/options-light.webp"
+                          alt="下载选项中可选择音画质、字幕、弹幕和其他附加内容"
+                          width="720"
+                          height="1600"
+                          loading="lazy"
+                          decoding="async"
+                      /></picture>
+                    </figure>
+                  </div>
+                </article>
+                <article class="story-chapter" id="story-panel-2" aria-labelledby="save-heading">
+                  <div class="story-copy">
+                    <p class="story-kicker"><span>03</span> 保存收藏</p>
+                    <h3 id="save-heading">下载好了，慢慢看。</h3>
+                    <p class="story-description">
+                      番剧、合集、歌单和收藏夹，勾选后就能批量下载。进度随时可看，文件也会按你设定的方式整理好。
+                    </p>
+                    <ul class="story-details">
+                      <li>
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#download"></use></svg
+                        >暂停、继续，下载节奏由你掌握
+                      </li>
+                      <li>
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#folder"></use></svg
+                        >自定义命名和目录，找起来更方便
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="story-media">
+                    <figure class="phone story-phone">
+                      <picture
+                        ><source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="./assets/screens/download-dark.webp" />
+                        <img
+                          src="./assets/screens/download-light.webp"
+                          alt="按作品分组查看下载进度，暂停或继续任务"
+                          width="720"
+                          height="1600"
+                          loading="lazy"
+                          decoding="async"
+                      /></picture>
+                    </figure>
+                  </div>
+                </article>
+              </div>
+            </div>
+            <div class="detail-strip">
+              <div>
+                <span class="detail-value">8K <span>+ Hi-Res</span></span>
+                <h3>画面与声音，都值得好好保存。</h3>
+              </div>
+              <div>
+                <p>也照顾每一个小细节。</p>
+                <p class="detail-description">
+                  字幕导出为 SRT，弹幕保存为 ASS 或 XML。专栏图文、AI 总结和 NFO
+                  元数据，让收藏更完整。
+                </p>
+                <p class="file-types">
+                  .srt <span>·</span> .ass <span>·</span> .md <span>·</span> .nfo
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section
+            id="screenshots"
+            class="screenshots-section"
+            aria-labelledby="screenshots-heading"
+          >
+            <div class="section-shell section-heading reveal">
+              <div>
+                <p class="eyebrow section-eyebrow">先看看，用起来是什么样</p>
+                <h2 id="screenshots-heading">熟悉的操作，顺手的体验。</h2>
+              </div>
+              <div class="gallery-heading-actions">
+                <p>解析、下载、收藏，各有各的位置。</p>
+                <div class="gallery-controls" hidden>
+                  <button
+                    class="icon-button"
+                    type="button"
+                    data-gallery-direction="-1"
+                    aria-label="向前浏览应用截图"
+                    aria-controls="screenshot-gallery"
+                  >
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#back"></use>
+                    </svg></button
+                  ><button
+                    class="icon-button"
+                    type="button"
+                    data-gallery-direction="1"
+                    aria-label="向后浏览应用截图"
+                    aria-controls="screenshot-gallery"
+                  >
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#arrow"></use>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <section
+              id="screenshot-gallery"
+              class="screenshot-gallery"
+              aria-label="应用界面截图，可横向滚动浏览"
+              tabindex="0"
+            >
+              <figure class="screenshot-card">
+                <a
+                  class="screenshot-link phone"
+                  href="./assets/screens/series-light.webp"
+                  data-screen="series"
+                  aria-label="放大查看番剧解析与选集界面"
+                  ><picture
+                    ><source
+                      data-theme-source
+                      media="(prefers-color-scheme: dark)"
+                      srcset="./assets/screens/series-dark.webp" />
+                    <img
+                      src="./assets/screens/series-light.webp"
+                      alt="番剧解析与选集界面"
+                      width="720"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async" /></picture
+                ></a>
+                <figcaption>
+                  <span>01</span>
+                  <div>
+                    <h3>解析与选集</h3>
+                    <p>查看作品，批量勾选剧集</p>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-card">
+                <a
+                  class="screenshot-link phone"
+                  href="./assets/screens/options-light.webp"
+                  data-screen="options"
+                  aria-label="放大查看下载与导出选项界面"
+                  ><picture
+                    ><source
+                      data-theme-source
+                      media="(prefers-color-scheme: dark)"
+                      srcset="./assets/screens/options-dark.webp" />
+                    <img
+                      src="./assets/screens/options-light.webp"
+                      alt="下载与导出选项界面"
+                      width="720"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async" /></picture
+                ></a>
+                <figcaption>
+                  <span>02</span>
+                  <div>
+                    <h3>下载与导出</h3>
+                    <p>选择音画质与附加内容</p>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-card">
+                <a
+                  class="screenshot-link phone"
+                  href="./assets/screens/download-light.webp"
+                  data-screen="download"
+                  aria-label="放大查看下载任务界面"
+                  ><picture
+                    ><source
+                      data-theme-source
+                      media="(prefers-color-scheme: dark)"
+                      srcset="./assets/screens/download-dark.webp" />
+                    <img
+                      src="./assets/screens/download-light.webp"
+                      alt="按作品分组的下载任务界面"
+                      width="720"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async" /></picture
+                ></a>
+                <figcaption>
+                  <span>03</span>
+                  <div>
+                    <h3>下载管理</h3>
+                    <p>查看进度，随时暂停继续</p>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-card">
+                <a
+                  class="screenshot-link phone"
+                  href="./assets/screens/history-light.webp"
+                  data-screen="history"
+                  aria-label="放大查看历史记录界面"
+                  ><picture
+                    ><source
+                      data-theme-source
+                      media="(prefers-color-scheme: dark)"
+                      srcset="./assets/screens/history-dark.webp" />
+                    <img
+                      src="./assets/screens/history-light.webp"
+                      alt="可搜索和筛选的历史记录界面"
+                      width="720"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async" /></picture
+                ></a>
+                <figcaption>
+                  <span>04</span>
+                  <div>
+                    <h3>历史记录</h3>
+                    <p>搜索、筛选看过的内容</p>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-card">
+                <a
+                  class="screenshot-link phone"
+                  href="./assets/screens/profile-light.webp"
+                  data-screen="profile"
+                  aria-label="放大查看个人中心界面"
+                  ><picture
+                    ><source
+                      data-theme-source
+                      media="(prefers-color-scheme: dark)"
+                      srcset="./assets/screens/profile-dark.webp" />
+                    <img
+                      src="./assets/screens/profile-light.webp"
+                      alt="个人中心、我的收藏与稍后再看入口"
+                      width="720"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async" /></picture
+                ></a>
+                <figcaption>
+                  <span>05</span>
+                  <div>
+                    <h3>我的收藏</h3>
+                    <p>收藏夹与稍后再看</p>
+                  </div>
+                </figcaption>
+              </figure>
+              <figure class="screenshot-card">
+                <a
+                  class="screenshot-link phone"
+                  href="./assets/screens/appearance-light.webp"
+                  data-screen="appearance"
+                  aria-label="放大查看外观设置界面"
+                  ><picture
+                    ><source
+                      data-theme-source
+                      media="(prefers-color-scheme: dark)"
+                      srcset="./assets/screens/appearance-dark.webp" />
+                    <img
+                      src="./assets/screens/appearance-light.webp"
+                      alt="明暗模式、十三套配色与液态玻璃外观设置"
+                      width="720"
+                      height="1600"
+                      loading="lazy"
+                      decoding="async" /></picture
+                ></a>
+                <figcaption>
+                  <span>06</span>
+                  <div>
+                    <h3>随心设置</h3>
+                    <p>主题、配色，随心调整</p>
+                  </div>
+                </figcaption>
+              </figure>
+            </section>
+            <p class="gallery-hint section-shell">点击截图查看大图，使用箭头浏览更多界面。</p>
+          </section>
+
+          <section class="appearance-section section-shell" aria-labelledby="appearance-heading">
+            <div class="appearance-panel reveal">
+              <div class="appearance-copy">
+                <p class="eyebrow section-eyebrow">一点个性，很多舒心</p>
+                <h2 id="appearance-heading">好看，<br />也可以很像你。</h2>
+                <p>
+                  十三套原创配色，挑一款喜欢的。白天清爽，夜晚柔和，也可以跟随系统壁纸取色。圆润的控件与通透的液态玻璃，让每次打开都很舒服。
+                </p>
+                <span class="appearance-label">13 种配色 · 明暗皆宜</span>
+              </div>
+              <div class="palette-composition" role="group" aria-label="App 内置的十三套原创配色">
+                <div class="palette-wordmark" aria-hidden="true">BiliTools</div>
+                <ul class="palette-list">
+                  <li style="--swatch: #b1c2f2">蓝紫</li>
+                  <li style="--swatch: #a8c9f2">鸢尾</li>
+                  <li style="--swatch: #a3d8f2">天蓝</li>
+                  <li style="--swatch: #a5e5e9">湖蓝</li>
+                  <li style="--swatch: #a8e7d4">薄荷</li>
+                  <li style="--swatch: #b7e6ba">青苹</li>
+                  <li style="--swatch: #d0e1a1">抹茶</li>
+                  <li style="--swatch: #f2d48b">沙金</li>
+                  <li style="--swatch: #f2b781">蜜杏</li>
+                  <li style="--swatch: #faaf9d">珊瑚</li>
+                  <li style="--swatch: #f5aebd">樱粉</li>
+                  <li style="--swatch: #f2c0eb">藕荷</li>
+                  <li style="--swatch: #d0bdf2">丁香</li>
+                </ul>
+                <div class="appearance-modes">
+                  <span
+                    ><svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#sun"></use></svg
+                    >日间清新</span
+                  ><span
+                    ><svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#moon"></use></svg
+                    >夜间舒适</span
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section
+            id="download"
+            class="download-section section-shell"
+            aria-labelledby="download-heading"
+          >
+            <div class="download-panel">
+              <div class="download-main">
+                <button
+                  class="download-mascot"
+                  type="button"
+                  aria-label="让小电视跳一下"
+                  disabled
+                >
+                  <img
+                    src="./assets/icon.png"
+                    alt=""
+                    width="76"
+                    height="76"
+                    loading="lazy"
+                    draggable="false"
+                  />
+                </button>
+                <p class="eyebrow">你的下一份收藏，从这里开始</p>
+                <h2 id="download-heading">精彩不止在线。<br />现在，带走喜欢。</h2>
+                <p>下载 BiliTools，把想看的内容存到手机里。</p>
+                <div class="release-info">
+                  <span class="release-version"
+                    ><span data-release-label>已发布版本</span>
+                    <strong data-release-version>v3.0</strong></span
+                  >
+                  <span class="release-date"
+                    ><time data-release-date datetime="2026-09-07T04:53:50Z">2026年9月7日</time>
+                    发布</span
+                  >
+                </div>
+                <div class="download-actions">
+                  <div class="split-button" role="group" aria-label="下载 BiliTools">
+                    <a
+                      class="split-button-primary"
+                      data-download-link
+                      href="https://files.happycola.top/BiliTools/BiliTools-v3.0-arm64-v8a.apk"
+                      ><svg class="icon" aria-hidden="true">
+                        <use href="./assets/icons.svg#download"></use>
+                      </svg>
+                      <span class="split-button-copy">
+                        <span class="split-button-title">加速下载</span>
+                        <span class="split-button-detail" data-package-summary aria-live="polite"
+                          >arm64-v8a · 67.5 MiB</span
+                        >
+                      </span>
+                    </a>
+                    <button
+                      class="split-button-toggle"
+                      type="button"
+                      popovertarget="package-menu"
+                      aria-haspopup="menu"
+                      aria-controls="package-menu"
+                      aria-expanded="false"
+                      aria-label="选择安装包"
+                      title="选择安装包"
+                      hidden
+                    >
+                      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                          d="m7 10 5 5 5-5"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.4"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <p class="package-hint">
+                    主流手机推荐 arm64-v8a，不确定时可选 universal 通用包。
+                  </p>
+                </div>
+                <div class="release-status">
+                  <p data-release-status role="status"></p>
+                  <button type="button" data-release-retry hidden>重新检查</button>
+                </div>
+                <noscript
+                  ><p class="download-meta">
+                    当前提供 v3.0 的 arm64-v8a 安装包。选择其他安装包或查看新版，请前往<a
+                      href="https://github.com/happycola233/BiliTools/releases/latest"
+                      >GitHub 发行版</a
+                    >。
+                  </p></noscript
+                >
+              </div>
+              <div class="install-guide">
+                <h3>开始之前</h3>
+                <ul class="install-checklist">
+                  <li>
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#check"></use>
+                    </svg>
+                    <div>
+                      <h4>Android 10 及以上</h4>
+                      <p>手机与平板均可安装。</p>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#check"></use>
+                    </svg>
+                    <div>
+                      <h4>功能相同，适配不同设备</h4>
+                      <p>
+                        各安装包的功能一致，区别在于处理器架构和文件大小。通用包包含全部四种架构，需要更多下载流量。
+                      </p>
+                    </div>
+                  </li>
+                  <li>
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#check"></use>
+                    </svg>
+                    <div>
+                      <h4>后续更新，在应用内完成</h4>
+                      <p>打开「设置 → 关于 → 检查更新」，<br />自动匹配适合设备的安装包。</p>
+                    </div>
+                  </li>
+                </ul>
+                <div class="install-links">
+                  <a
+                    data-release-notes
+                    href="https://github.com/happycola233/BiliTools/releases/tag/v3.0"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >更新记录<svg class="icon small" aria-hidden="true">
+                      <use href="./assets/icons.svg#external"></use></svg></a
+                  ><a
+                    href="https://github.com/happycola233/BiliTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >项目仓库<svg class="icon small" aria-hidden="true">
+                      <use href="./assets/icons.svg#external"></use></svg></a
+                  ><a
+                    href="https://github.com/happycola233/BiliTools/releases"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >历史版本<svg class="icon small" aria-hidden="true">
+                      <use href="./assets/icons.svg#external"></use></svg></a
+                  ><a
+                    href="https://github.com/happycola233/BiliTools#-安装"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >安装说明<svg class="icon small" aria-hidden="true">
+                      <use href="./assets/icons.svg#external"></use></svg
+                  ></a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+
+        <footer class="site-footer section-shell">
+          <div class="footer-top">
+            <a class="brand" href="#" aria-label="BiliTools 首页"
+              ><img src="./assets/icon.png" alt="" width="40" height="40" /><span
+                >BiliTools</span
+              ></a
+            >
+            <p>一个免费开源的哔哩哔哩下载工具。</p>
+            <nav class="footer-links" aria-label="项目链接">
+              <a
+                href="https://github.com/happycola233/BiliTools"
+                target="_blank"
+                rel="noopener noreferrer"
+                >源码</a
+              >
+              <a
+                href="https://github.com/happycola233/BiliTools/issues"
+                target="_blank"
+                rel="noopener noreferrer"
+                >问题反馈</a
+              >
+              <a
+                href="https://github.com/happycola233/BiliTools/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GPL-3.0</a
+              >
+            </nav>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2026 BiliTools contributors</p>
+            <p>本项目与哔哩哔哩及其关联公司无关联、合作或背书关系。</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <div id="package-menu" class="package-menu" popover="auto">
+      <div class="package-menu-header">
+        <h2 id="package-menu-heading">选择安装包</h2>
+        <p id="package-menu-hint">功能相同，选择适合设备的版本。</p>
+      </div>
+      <div
+        class="package-options"
+        role="menu"
+        aria-labelledby="package-menu-heading"
+        aria-describedby="package-menu-hint"
+      >
+        <button
+          type="button"
+          class="package-option"
+          role="menuitemradio"
+          data-architecture="arm64-v8a"
+          aria-checked="true"
+          tabindex="-1"
+        >
+          <span class="package-check" aria-hidden="true"
+            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+          ></span>
+          <span class="package-choice"
+            ><span class="package-name">arm64-v8a <span class="package-badge">推荐</span></span
+            ><span class="package-description">64 位 ARM · 主流手机与平板</span></span
+          >
+          <span class="package-size" data-package-size></span>
+        </button>
+        <button
+          type="button"
+          class="package-option"
+          role="menuitemradio"
+          data-architecture="armeabi-v7a"
+          aria-checked="false"
+          tabindex="-1"
+        >
+          <span class="package-check" aria-hidden="true"
+            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+          ></span>
+          <span class="package-choice"
+            ><span class="package-name">armeabi-v7a</span
+            ><span class="package-description">32 位 ARM · 较早的设备</span></span
+          >
+          <span class="package-size" data-package-size></span>
+        </button>
+        <button
+          type="button"
+          class="package-option"
+          role="menuitemradio"
+          data-architecture="universal"
+          aria-checked="false"
+          tabindex="-1"
+        >
+          <span class="package-check" aria-hidden="true"
+            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+          ></span>
+          <span class="package-choice"
+            ><span class="package-name">universal</span
+            ><span class="package-description">通用包 · 包含四种架构，体积较大</span></span
+          >
+          <span class="package-size" data-package-size></span>
+        </button>
+        <button
+          type="button"
+          class="package-option"
+          role="menuitemradio"
+          data-architecture="x86"
+          aria-checked="false"
+          tabindex="-1"
+        >
+          <span class="package-check" aria-hidden="true"
+            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+          ></span>
+          <span class="package-choice"
+            ><span class="package-name">x86</span
+            ><span class="package-description">32 位 x86 · 部分模拟器与设备</span></span
+          >
+          <span class="package-size" data-package-size></span>
+        </button>
+        <button
+          type="button"
+          class="package-option"
+          role="menuitemradio"
+          data-architecture="x86_64"
+          aria-checked="false"
+          tabindex="-1"
+        >
+          <span class="package-check" aria-hidden="true"
+            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+          ></span>
+          <span class="package-choice"
+            ><span class="package-name">x86_64</span
+            ><span class="package-description">64 位 x86 · 部分模拟器与设备</span></span
+          >
+          <span class="package-size" data-package-size></span>
+        </button>
+      </div>
+      <p class="package-menu-footer">不确定设备架构？选择 universal 通用包。</p>
+    </div>
+    <dialog class="screenshot-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-toolbar">
+        <h2 id="dialog-title">应用界面</h2>
+        <form method="dialog">
+          <button type="submit" class="icon-button" aria-label="关闭截图">
+            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#close"></use></svg>
+          </button>
+        </form>
+      </div>
+      <div class="dialog-viewport">
+        <img
+          class="dialog-image"
+          src="./assets/screens/series-light.webp"
+          alt=""
+          width="720"
+          height="1600"
+        />
+        <img
+          class="dialog-image"
+          src="./assets/screens/series-light.webp"
+          alt=""
+          width="720"
+          height="1600"
+          hidden
+        />
+      </div>
+      <div class="dialog-navigation">
+        <button
+          type="button"
+          class="icon-button"
+          data-dialog-direction="-1"
+          aria-label="上一张截图"
+        >
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#back"></use></svg>
+        </button>
+        <p class="dialog-count" aria-live="polite"></p>
+        <button type="button" class="icon-button" data-dialog-direction="1" aria-label="下一张截图">
+          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow"></use></svg>
+        </button>
+      </div>
+    </dialog>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+{
+  "name": "bilitools-website",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "assets": "node scripts/generate-assets.mjs",
+    "check": "node scripts/check-site.mjs",
+    "test": "node --test scripts/releases.test.mjs"
+  },
+  "devDependencies": {
+    "sharp": "0.35.4",
+    "vite": "8.2.2"
+  },
+  "dependencies": {
+    "gsap": "3.15.0"
+  }
+}
