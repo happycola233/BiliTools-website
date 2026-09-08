@@ -25,8 +25,89 @@
   --hero-panel: #e0e8fc;
   --glass: rgb(255 255 255 / 88%);
   --shadow: 0 24px 70px -30px rgb(40 53 95 / 28%);
+  --popover-shadow: 0 0 20px rgb(40 53 95 / 16%), 0 18px 48px -12px rgb(40 53 95 / 28%);
   --ease-expressive: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-spring: cubic-bezier(0.2, 1.3, 0.35, 1);
+  /* AndroidX ShapeTokens：统一使用官方圆角档位，避免各控件分别微调曲率。 */
+  --shape-corner-extra-small: 4px;
+  --shape-corner-small: 8px;
+  --shape-corner-medium: 12px;
+  /* IconButton / SplitButton 的形状使用 DefaultEffects（阻尼 1、刚度 1600），不超调。 */
+  --motion-shape: 250ms
+    linear(
+      0,
+      0.0616,
+      0.1912,
+      0.3374,
+      0.4751,
+      0.594,
+      0.6916,
+      0.7689,
+      0.8288,
+      0.8743,
+      0.9084,
+      0.9337,
+      0.9523,
+      0.9658,
+      0.9756,
+      0.9826,
+      0.9877,
+      0.9913,
+      0.9939,
+      0.9957,
+      0.997,
+      0.9979,
+      0.9985,
+      0.999,
+      0.9993,
+      1
+    );
+  /* AndroidX ExpressiveMotionTokens：FastSpatial，阻尼 0.6、刚度 800，每 10ms 采样。 */
+  --motion-spatial: 400ms
+    linear(
+      0,
+      0.0356,
+      0.1259,
+      0.2492,
+      0.3876,
+      0.5274,
+      0.6588,
+      0.7754,
+      0.8736,
+      0.952,
+      1.0111,
+      1.0524,
+      1.0783,
+      1.0915,
+      1.0947,
+      1.0906,
+      1.0816,
+      1.0697,
+      1.0565,
+      1.0433,
+      1.031,
+      1.0201,
+      1.011,
+      1.0038,
+      0.9984,
+      0.9947,
+      0.9924,
+      0.9912,
+      0.991,
+      0.9915,
+      0.9924,
+      0.9935,
+      0.9948,
+      0.996,
+      0.9972,
+      0.9982,
+      0.999,
+      0.9997,
+      1.0002,
+      1.0005,
+      1
+    );
+  --motion-color: 200ms cubic-bezier(0.2, 0, 0, 1);
   --content-width: 1200px;
   --panel-radius: 40px;
   --gutter: clamp(24px, 5vw, 72px);
@@ -57,6 +138,7 @@
   --hero-panel: #282f44;
   --glass: rgb(32 35 41 / 90%);
   --shadow: 0 24px 70px -30px rgb(0 0 0 / 65%);
+  --popover-shadow: 0 0 20px rgb(0 0 0 / 36%), 0 18px 48px -12px rgb(0 0 0 / 60%);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
@@ -76,6 +158,7 @@
     --hero-panel: #282f44;
     --glass: rgb(32 35 41 / 90%);
     --shadow: 0 24px 70px -30px rgb(0 0 0 / 65%);
+    --popover-shadow: 0 0 20px rgb(0 0 0 / 36%), 0 18px 48px -12px rgb(0 0 0 / 60%);
   }
 }
 
@@ -218,17 +301,28 @@ button:disabled {
   gap: 8px;
 }
 .main-nav a {
+  --button-shape: 22px;
+  --button-pressed-shape: var(--shape-corner-medium);
   min-width: 70px;
   min-height: 44px;
   display: grid;
   place-items: center;
   padding: 10px 18px;
-  border-radius: 24px;
+  border-radius: var(--button-current-shape);
   font-size: 0.9375rem;
   font-weight: 550;
-  transition: background 200ms;
 }
-.main-nav a:hover,
+/* 页内导航保留稳定位置和胶囊选中态，只在按压时沿用 Expressive 圆角反馈。 */
+@media (hover: hover) {
+  .main-nav a:hover {
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    color: var(--primary);
+  }
+}
+.main-nav a[data-pressed] {
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  color: var(--primary);
+}
 .main-nav a[aria-current='location'] {
   background: var(--blue-surface);
   color: var(--primary);
@@ -239,26 +333,77 @@ button:disabled {
   gap: 12px;
   align-items: center;
 }
-.icon-button {
+/* 图标、配色、分组和 Split Button 共用按压状态与形变；各控件仅声明自己的形状。 */
+.expressive-button {
+  --button-current-shape: var(--button-shape, 24px);
+  border-radius: var(--button-current-shape);
   user-select: none;
   -webkit-user-select: none;
+  transition:
+    border-radius var(--motion-shape),
+    background-color var(--motion-color),
+    color var(--motion-color);
+}
+.expressive-button[data-pressed] {
+  --button-current-shape: var(--button-pressed-shape, var(--shape-corner-small));
+}
+.connected-button-group {
+  --button-height: 44px;
+  --group-outer-radius: calc(var(--button-height) / 2);
+  --group-inner-radius: var(--shape-corner-small);
+  display: grid;
+  /* 三种状态保留相同的轨道结构，避免 repeat()/minmax() 与裸 fr 之间发生离散跳变。 */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2px;
+  transition: grid-template-columns var(--motion-spatial);
+}
+.connected-button-group > .expressive-button {
+  --button-shape: var(--group-inner-radius);
+  --button-pressed-shape: var(--shape-corner-extra-small);
+  min-width: 0;
+  min-height: var(--button-height);
+  white-space: nowrap;
+}
+.connected-button-group > :first-child {
+  --button-pressed-shape: var(--group-outer-radius) var(--shape-corner-extra-small)
+    var(--shape-corner-extra-small) var(--group-outer-radius);
+  --button-shape: var(--group-outer-radius) var(--group-inner-radius) var(--group-inner-radius)
+    var(--group-outer-radius);
+}
+.connected-button-group > :last-child {
+  --button-pressed-shape: var(--shape-corner-extra-small) var(--group-outer-radius)
+    var(--group-outer-radius) var(--shape-corner-extra-small);
+  --button-shape: var(--group-inner-radius) var(--group-outer-radius) var(--group-outer-radius)
+    var(--group-inner-radius);
+}
+.connected-button-group > :is([aria-selected='true'], [aria-checked='true']) {
+  --button-shape: var(--group-outer-radius);
+}
+/* 按 AndroidX 的 15% 扩张比例，只让直接相邻的按钮分担压缩，整组宽度不变。 */
+.connected-button-group:has(> :first-child[data-pressed]) {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr) minmax(0, 1fr);
+}
+.connected-button-group:has(> :nth-child(2)[data-pressed]) {
+  grid-template-columns: minmax(0, 0.925fr) minmax(0, 1.15fr) minmax(0, 0.925fr);
+}
+.connected-button-group:has(> :last-child[data-pressed]) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr) minmax(0, 1.15fr);
+}
+.icon-button,
+.palette-list button {
+  /* 圆形控件共用 Medium 圆角，减小按压形变量；配色选中后仍恢复圆形。 */
+  --button-pressed-shape: var(--shape-corner-medium);
+}
+.icon-button {
+  --button-shape: 22px;
   min-width: 44px;
   min-height: 44px;
-  border-radius: 50%;
   display: inline-grid;
   place-items: center;
   background: var(--surface-soft);
-  transition:
-    border-radius 240ms var(--ease-expressive),
-    background 200ms,
-    transform 240ms var(--ease-expressive);
 }
 .icon-button:hover:not(:disabled) {
-  border-radius: 15px;
   background: var(--blue-surface);
-}
-.icon-button:active:not(:disabled) {
-  transform: scale(0.93);
 }
 .header-github {
   display: inline-flex;
@@ -607,39 +752,22 @@ h2 {
 }
 /* 单个展示面板共用截图框，三步入口一直可见，切换时内容尺寸保持稳定。 */
 .story-tabs {
-  display: flex;
+  --button-height: 50px;
   gap: 4px;
   margin-bottom: 30px;
 }
 .story-tabs button {
   position: relative;
-  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 50px;
   padding: 12px;
-  border-radius: 8px;
   background: var(--blue-surface);
   color: var(--muted);
   font-size: 0.9375rem;
   font-weight: 550;
   white-space: nowrap;
-  user-select: none;
-  transition:
-    flex 400ms var(--ease-spring),
-    border-radius 400ms var(--ease-spring),
-    background 200ms,
-    color 200ms;
-}
-.story-tabs button:first-child {
-  border-start-start-radius: 28px;
-  border-end-start-radius: 28px;
-}
-.story-tabs button:last-child {
-  border-start-end-radius: 28px;
-  border-end-end-radius: 28px;
 }
 .story-tabs button span {
   font-size: 0.8125rem;
@@ -647,14 +775,8 @@ h2 {
   opacity: 0.7;
 }
 .story-tabs button[aria-selected='true'] {
-  flex: 1.12;
-  border-radius: 28px;
   color: var(--on-primary-fixed);
   background: var(--primary-fixed);
-}
-.story-tabs button:active {
-  flex: 1.2;
-  border-radius: 18px;
 }
 .story-tabs button:not([aria-selected='true']):hover {
   background: var(--blue-surface);
@@ -848,7 +970,7 @@ h2 {
 }
 .appearance-panel {
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
   align-items: center;
   gap: 60px;
   padding: 60px;
@@ -869,71 +991,217 @@ h2 {
   font-weight: 550;
 }
 .palette-composition {
-  padding-block: 14px;
+  /* 面板、文字和按钮同时混合到下一套颜色；形变保持独立的空间弹簧。 */
+  --motion-color: 280ms cubic-bezier(0.2, 0, 0, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  max-width: 480px;
+  margin-inline: auto;
+  padding-block: 0 8px;
   text-align: center;
 }
-.palette-wordmark {
-  font-size: clamp(2.625rem, 4.6vw, 4.25rem);
-  color: var(--primary);
-  font-weight: 600;
-  letter-spacing: 0;
-  margin-bottom: 24px;
-}
 .palette-list {
+  width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 9px;
+  display: grid;
+  /* 14 等分让第二行的六个色块居中，窄屏也始终保持两行。 */
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  gap: 18px 4px;
 }
 .palette-list li {
+  grid-column: span 2;
+  min-width: 0;
+}
+.palette-list li:nth-child(8) {
+  grid-column: 2 / span 2;
+}
+.palette-list button {
+  --button-shape: 26px;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0 3px 3px;
+  border-radius: 28px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+.palette-swatch {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 69px;
-  height: 69px;
-  font-size: 0.75rem;
-  color: #26334b;
-  background: var(--swatch);
-  border-radius: 25px;
+  width: min(100%, 52px);
+  aspect-ratio: 1;
+  border-radius: var(--button-current-shape);
+  background: var(--palette-primary-fixed-dim);
   transition:
-    border-radius 350ms var(--ease-expressive),
-    transform 350ms var(--ease-expressive);
+    border-radius var(--motion-shape),
+    background-color var(--motion-color);
 }
-.palette-list li:nth-child(3n + 1) {
-  border-radius: 50%;
+.palette-check {
+  width: 46%;
+  height: 46%;
+  color: var(--palette-on-primary-fixed);
+  opacity: 0;
+  transform: scale(0.7);
+  transition:
+    opacity 180ms ease,
+    transform 240ms var(--ease-expressive);
 }
-.palette-list li:nth-child(3n + 2) {
-  border-radius: 18px 32px 18px 32px;
+.palette-list button[aria-pressed='true'] .palette-check {
+  opacity: 1;
+  transform: scale(1);
 }
-.palette-list li:hover {
-  transform: rotate(-8deg) scale(1.09);
-  border-radius: 20px;
+.palette-list button[aria-pressed='true'] .palette-name {
+  color: var(--text);
+  font-weight: 600;
+}
+.palette-preview {
+  /* 与 AppSurfaces 相同：浅色内嵌面取相邻档位中点，深色直接使用 surfaceContainerHigh。 */
+  --palette-inset: color-mix(
+    in oklab,
+    var(--palette-surface-low),
+    var(--palette-surface-container)
+  );
+  width: min(100%, 360px);
+  margin-bottom: 24px;
+  padding: 24px;
+  border-radius: 28px;
+  background: var(--palette-card);
+  color: var(--palette-on-surface);
+  text-align: left;
+  transition:
+    background-color var(--motion-color),
+    color var(--motion-color);
+}
+[data-preview-mode='dark'] .palette-preview {
+  --palette-inset: var(--palette-surface-high);
+}
+.palette-preview-heading,
+.palette-preview-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.palette-preview-title {
+  font-size: 1.25rem;
+  font-weight: 550;
+}
+.palette-preview-name {
+  color: var(--palette-on-surface-variant);
+  font-size: 0.75rem;
+}
+.palette-preview-name,
+.palette-preview-label,
+.palette-preview-quality {
+  transition: color var(--motion-color);
+}
+.palette-preview-content {
+  margin-block: 20px 24px;
+}
+.palette-preview-label {
+  margin-bottom: 10px;
+  font-size: 0.875rem;
+  font-weight: 550;
+  color: var(--palette-primary);
+}
+.palette-preview-segments button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px 4px;
+  background: var(--palette-inset);
+  color: var(--palette-on-surface);
+  text-align: center;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+.palette-preview-segments .icon {
+  width: 18px;
+  height: 18px;
+}
+.palette-preview-segments button[aria-checked='true'] {
+  background: var(--palette-primary-fixed-dim);
+  color: var(--palette-on-primary-fixed);
+}
+.palette-preview button:focus-visible {
+  z-index: 1;
+  outline-color: var(--palette-primary);
+  outline-offset: 3px;
+}
+@media (hover: hover) {
+  .palette-preview-segments button:hover,
+  .palette-preview-download:hover {
+    background-image: linear-gradient(rgb(0 0 0 / 5%), rgb(0 0 0 / 5%));
+  }
+}
+.palette-preview-quality {
+  /* 固定行盒，避免切换中英文混排时 fallback 字体抬高行盒，改变垂直居中的位置。 */
+  display: block;
+  color: var(--palette-on-surface-variant);
+  font-size: 0.75rem;
+  line-height: 18px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.palette-preview-download {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 20px;
+  background: var(--palette-primary-fixed-dim);
+  color: var(--palette-on-primary-fixed);
+  font-size: 0.875rem;
+  font-weight: 550;
+}
+.palette-confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 120;
 }
 .appearance-modes {
-  display: flex;
-  justify-content: center;
-  gap: 7px;
-  margin-top: 30px;
+  display: inline-flex;
+  gap: 8px;
+  margin-top: 28px;
+  padding: 0;
 }
-.appearance-modes span {
+.appearance-modes button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 11px 18px;
-  border-radius: 24px;
-  background: #fafaff;
-  color: #3e4559;
+  min-height: 44px;
+  padding: 10px 16px;
+  background: var(--surface);
+  color: var(--muted);
   font-size: 0.8125rem;
 }
-.appearance-modes span + span {
-  background: #292d37;
-  color: #cdd8f5;
+.appearance-modes button[aria-pressed='true'] {
+  background: var(--palette-primary-fixed-dim);
+  color: var(--palette-on-primary-fixed);
 }
 .appearance-modes .icon {
   width: 18px;
   height: 18px;
+}
+.palette-hint {
+  margin-top: 16px;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .download-section {
@@ -1052,21 +1320,21 @@ h2 {
   min-height: var(--split-height);
   background: var(--primary);
   color: var(--on-primary);
-  transition:
-    border-radius 380ms var(--ease-spring),
-    transform 380ms var(--ease-spring),
-    background 180ms;
 }
 .split-button-primary {
+  --button-shape: var(--split-radius) var(--shape-corner-extra-small)
+    var(--shape-corner-extra-small) var(--split-radius);
+  --button-pressed-shape: var(--split-radius) var(--shape-corner-medium) var(--shape-corner-medium)
+    var(--split-radius);
   flex: 1;
   min-width: 0;
   gap: 12px;
   padding: 12px 26px;
-  border-radius: var(--split-radius) 6px 6px var(--split-radius);
 }
 .split-button-primary:only-child,
 .split-button:has(.split-button-toggle[hidden]) .split-button-primary {
-  border-radius: var(--split-radius);
+  --button-shape: var(--split-radius);
+  --button-pressed-shape: var(--shape-corner-medium);
 }
 .split-button-primary > .icon {
   width: 24px;
@@ -1091,30 +1359,25 @@ h2 {
   opacity: 0.85;
 }
 .split-button-toggle {
+  --button-shape: var(--shape-corner-extra-small) var(--split-radius) var(--split-radius)
+    var(--shape-corner-extra-small);
+  --button-pressed-shape: var(--shape-corner-medium) var(--split-radius) var(--split-radius)
+    var(--shape-corner-medium);
   flex: 0 0 var(--split-height);
   width: var(--split-height);
   padding: 0;
-  border-radius: 6px var(--split-radius) var(--split-radius) 6px;
 }
 .split-button-toggle .icon {
   width: 24px;
   height: 24px;
-  transition: transform 420ms var(--ease-spring);
+  transition: transform var(--motion-shape);
 }
 .split-button-primary:hover,
 .split-button-toggle:hover:not(:disabled) {
   background: color-mix(in srgb, var(--primary), var(--on-primary) 8%);
 }
-.split-button-primary:active {
-  border-radius: 20px 12px 12px 20px;
-  transform: scale(0.98);
-}
-.split-button-toggle:active:not(:disabled) {
-  border-radius: 16px;
-  transform: scale(0.94);
-}
 .split-button-toggle[aria-expanded='true'] {
-  border-radius: 50%;
+  --button-shape: var(--split-radius);
   background: var(--primary-fixed);
   color: var(--on-primary-fixed);
 }
@@ -1132,14 +1395,15 @@ h2 {
 .package-menu {
   position: fixed;
   inset: auto;
-  width: min(368px, calc(100vw - 24px));
+  width: min(336px, calc(100vw - 24px));
   margin: 0;
   padding: 8px;
   border: 0;
-  border-radius: 28px;
+  border-radius: 24px;
   background: var(--surface-soft);
   color: var(--text);
-  box-shadow: 0 16px 52px -12px rgb(0 0 0 / 30%);
+  /* 环境阴影覆盖顶部，投影强调悬浮高度，让弹层在相近底色上也有层次。 */
+  box-shadow: var(--popover-shadow);
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: thin;
@@ -1158,10 +1422,10 @@ h2 {
   }
 }
 .package-menu-header {
-  padding: 12px 14px 14px;
+  padding: 10px 12px;
 }
 .package-menu-header h2 {
-  font-size: 1.125rem;
+  font-size: 1rem;
   line-height: 1.5;
 }
 .package-menu-header p,
@@ -1180,10 +1444,10 @@ h2 {
 .package-option {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  min-height: 68px;
-  padding: 10px;
+  min-height: 60px;
+  padding: 8px;
   border-radius: 4px;
   background: var(--surface);
   color: var(--text);
@@ -1217,9 +1481,9 @@ h2 {
 .package-check {
   display: grid;
   place-items: center;
-  flex: 0 0 24px;
-  width: 24px;
-  height: 24px;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
 }
 .package-check .icon {
@@ -1238,15 +1502,15 @@ h2 {
 .package-choice {
   flex: 1;
   display: grid;
-  gap: 4px;
+  gap: 2px;
   min-width: 0;
 }
 .package-name {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9375rem;
+  gap: 6px;
+  font-size: 0.875rem;
   font-weight: 600;
   overflow-wrap: anywhere;
 }
@@ -1274,7 +1538,7 @@ h2 {
   font-variant-numeric: tabular-nums;
 }
 .package-menu-footer {
-  padding: 12px 14px 8px;
+  padding: 10px 12px 6px;
 }
 .release-status {
   display: flex;
@@ -1490,10 +1754,6 @@ h2 {
     padding: 40px;
     gap: 35px;
   }
-  .palette-list li {
-    width: 60px;
-    height: 60px;
-  }
   .download-panel {
     padding: 45px;
     gap: 32px;
@@ -1580,18 +1840,6 @@ h2 {
   .appearance-copy h2 br {
     display: none;
   }
-  .palette-composition {
-    max-width: 430px;
-    width: 100%;
-    margin-inline: auto;
-  }
-  .palette-wordmark {
-    font-size: 3.75rem;
-  }
-  .palette-list li {
-    width: 67px;
-    height: 67px;
-  }
   .download-panel {
     grid-template-columns: 1fr;
     padding: 35px;
@@ -1639,20 +1887,11 @@ h2 {
     font-size: 0.75rem;
   }
   .package-menu {
-    width: min(336px, calc(100vw - 24px));
     padding: 6px;
     border-radius: 22px;
   }
   .package-menu-header {
     padding: 8px 10px 10px;
-  }
-  .package-menu-header h2 {
-    font-size: 1rem;
-  }
-  .package-option {
-    min-height: 60px;
-    padding: 8px;
-    gap: 8px;
   }
   .package-option:first-child {
     border-top-left-radius: 16px;
@@ -1664,18 +1903,6 @@ h2 {
   }
   .package-option[aria-checked='true'] {
     border-radius: 16px;
-  }
-  .package-check {
-    flex-basis: 20px;
-    width: 20px;
-    height: 20px;
-  }
-  .package-choice {
-    gap: 2px;
-  }
-  .package-name {
-    gap: 6px;
-    font-size: 0.875rem;
   }
   .package-menu-footer {
     padding: 10px 10px 6px;
@@ -1862,21 +2089,19 @@ h2 {
   .appearance-copy h2 br {
     display: initial;
   }
-  .palette-wordmark {
-    font-size: 3rem;
-  }
   .palette-list {
-    gap: 7px;
+    gap: 14px 2px;
   }
-  .palette-list li {
-    width: 53px;
-    height: 53px;
-    border-radius: 18px;
+  .palette-list button {
+    padding-inline: 2px;
+    gap: 8px;
+    font-size: 0.75rem;
   }
-  .appearance-modes {
-    gap: 6px;
+  .palette-preview {
+    padding: 18px;
+    border-radius: 24px;
   }
-  .appearance-modes span {
+  .appearance-modes button {
     font-size: 0.75rem;
     padding: 10px 13px;
   }
@@ -1928,6 +2153,15 @@ h2 {
   .main-nav {
     display: none;
   }
+  .palette-preview-segments button {
+    gap: 4px;
+    padding-inline: 2px;
+    font-size: 0.75rem;
+  }
+  .palette-preview-segments .icon {
+    width: 16px;
+    height: 16px;
+  }
 }
 @media (max-width: 360px) {
   .split-button-primary {
@@ -1939,9 +2173,20 @@ h2 {
   :root {
     --gutter: 20px;
   }
-  .palette-list li {
-    width: 48px;
-    height: 48px;
+  .palette-preview-title {
+    font-size: 1.125rem;
+  }
+  /* 小屏借用卡片两侧留白，给图标、文字和相邻按钮的按压压缩留出空间。 */
+  .palette-preview {
+    width: calc(100% + 16px);
+    padding-inline: 16px;
+  }
+  .palette-preview-segments button {
+    padding-inline: 0;
+  }
+  .palette-preview-segments .icon {
+    width: 14px;
+    height: 14px;
   }
 }
 /* 矮屏先收紧留白和控件间距，保留下载按钮的原有尺寸。 */

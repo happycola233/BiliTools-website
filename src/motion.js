@@ -23,6 +23,7 @@ export function createScrollExperience() {
         onFocusIn: (_instance, event) =>
           !document.querySelector('.screenshot-dialog').open &&
           !event.target.closest('[popover]') &&
+          !event.target.closest('.palette-composition') &&
           !event.target.matches('[tabindex="-1"]'),
       });
     }

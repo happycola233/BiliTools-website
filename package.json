@@ -11,6 +11,7 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "assets": "node scripts/generate-assets.mjs",
+    "palettes": "node scripts/generate-palettes.mjs",
     "check": "node scripts/check-site.mjs",
     "test": "node --test scripts/releases.test.mjs"
   },
@@ -19,6 +20,7 @@
     "vite": "8.2.2"
   },
   "dependencies": {
+    "canvas-confetti": "^1.9.4",
     "gsap": "3.15.0"
   }
 }

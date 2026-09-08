@@ -73,6 +73,9 @@ for (const script of [
   'screenshot-viewer.js',
   'downloads.js',
   'download-mascot.js',
+  'palette-preview.js',
+  'expressive-buttons.js',
+  'palette-celebration.js',
   'split-button.js',
   'releases.js',
 ]) {

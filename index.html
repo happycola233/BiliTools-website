@@ -44,13 +44,13 @@
         <span>BiliTools</span>
       </a>
       <nav class="main-nav" aria-label="主要导航">
-        <a href="#features">功能</a>
-        <a href="#screenshots">界面</a>
-        <a href="#download">下载</a>
+        <a class="expressive-button" href="#features">功能</a>
+        <a class="expressive-button" href="#screenshots">界面</a>
+        <a class="expressive-button" href="#download">下载</a>
       </nav>
       <div class="header-actions">
         <button
-          class="icon-button theme-toggle"
+          class="icon-button expressive-button theme-toggle"
           type="button"
           aria-label="切换为深色模式"
           title="切换为深色模式"
@@ -87,7 +87,8 @@
               <p class="eyebrow"><span class="status-dot"></span> 免费开源 · 为 Android 而生</p>
               <p class="hero-wordmark" aria-hidden="true">BiliTools</p>
               <h1 id="hero-heading">
-                把喜欢的<span class="title-punctuation">，</span><br />留在<span class="title-accent"
+                把喜欢的<span class="title-punctuation">，</span><br />留在<span
+                  class="title-accent"
                   >身边<svg viewBox="0 0 220 16" fill="none" aria-hidden="true">
                     <path d="M5 11C56 1 130 2 215 9" /></svg></span
                 ><span class="title-punctuation">。</span>
@@ -181,9 +182,15 @@
                 <h2 id="features-heading">三步，收好每一份喜欢。</h2>
                 <p>粘贴链接，选择内容，再下载到手机。</p>
               </div>
-              <div class="story-tabs" role="tablist" aria-label="了解下载的三个步骤" hidden>
+              <div
+                class="story-tabs connected-button-group"
+                role="tablist"
+                aria-label="了解下载的三个步骤"
+                hidden
+              >
                 <button
                   id="story-tab-0"
+                  class="expressive-button"
                   type="button"
                   role="tab"
                   aria-controls="story-panel-0"
@@ -194,6 +201,7 @@
                 </button>
                 <button
                   id="story-tab-1"
+                  class="expressive-button"
                   type="button"
                   role="tab"
                   aria-controls="story-panel-1"
@@ -204,6 +212,7 @@
                 </button>
                 <button
                   id="story-tab-2"
+                  class="expressive-button"
                   type="button"
                   role="tab"
                   aria-controls="story-panel-2"
@@ -364,7 +373,7 @@
                 <p>解析、下载、收藏，各有各的位置。</p>
                 <div class="gallery-controls" hidden>
                   <button
-                    class="icon-button"
+                    class="icon-button expressive-button"
                     type="button"
                     data-gallery-direction="-1"
                     aria-label="向前浏览应用截图"
@@ -374,7 +383,7 @@
                       <use href="./assets/icons.svg#back"></use>
                     </svg></button
                   ><button
-                    class="icon-button"
+                    class="icon-button expressive-button"
                     type="button"
                     data-gallery-direction="1"
                     aria-label="向后浏览应用截图"
@@ -570,33 +579,114 @@
                 <span class="appearance-label">13 种配色 · 明暗皆宜</span>
               </div>
               <div class="palette-composition" role="group" aria-label="App 内置的十三套原创配色">
-                <div class="palette-wordmark" aria-hidden="true">BiliTools</div>
-                <ul class="palette-list">
-                  <li style="--swatch: #b1c2f2">蓝紫</li>
-                  <li style="--swatch: #a8c9f2">鸢尾</li>
-                  <li style="--swatch: #a3d8f2">天蓝</li>
-                  <li style="--swatch: #a5e5e9">湖蓝</li>
-                  <li style="--swatch: #a8e7d4">薄荷</li>
-                  <li style="--swatch: #b7e6ba">青苹</li>
-                  <li style="--swatch: #d0e1a1">抹茶</li>
-                  <li style="--swatch: #f2d48b">沙金</li>
-                  <li style="--swatch: #f2b781">蜜杏</li>
-                  <li style="--swatch: #faaf9d">珊瑚</li>
-                  <li style="--swatch: #f5aebd">樱粉</li>
-                  <li style="--swatch: #f2c0eb">藕荷</li>
-                  <li style="--swatch: #d0bdf2">丁香</li>
-                </ul>
-                <div class="appearance-modes">
-                  <span
-                    ><svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#sun"></use></svg
-                    >日间清新</span
-                  ><span
-                    ><svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#moon"></use></svg
-                    >夜间舒适</span
-                  >
+                <div
+                  id="palette-preview"
+                  class="palette-preview"
+                  role="region"
+                  aria-label="配色效果预览"
+                >
+                  <div class="palette-preview-heading">
+                    <span class="palette-preview-title">下载与导出</span>
+                    <span class="palette-preview-name" role="status">蓝紫 · 日间</span>
+                  </div>
+                  <div class="palette-preview-content">
+                    <p id="palette-output-label" class="palette-preview-label">输出类型</p>
+                    <div
+                      class="palette-preview-segments connected-button-group"
+                      role="radiogroup"
+                      aria-labelledby="palette-output-label"
+                    >
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked="true"
+                        data-preview-output="audiovisual"
+                        class="expressive-button"
+                        tabindex="0"
+                      >
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#output-audiovisual"></use>
+                        </svg>
+                        <span>音视频</span>
+                      </button>
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked="false"
+                        data-preview-output="video"
+                        class="expressive-button"
+                        tabindex="-1"
+                      >
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#output-video"></use>
+                        </svg>
+                        <span>仅视频</span>
+                      </button>
+                      <button
+                        type="button"
+                        role="radio"
+                        aria-checked="false"
+                        data-preview-output="audio"
+                        class="expressive-button"
+                        tabindex="-1"
+                      >
+                        <svg class="icon" aria-hidden="true">
+                          <use href="./assets/icons.svg#output-audio"></use>
+                        </svg>
+                        <span>仅音频</span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="palette-preview-actions">
+                    <span class="palette-preview-quality">1080P · DASH</span>
+                    <button type="button" class="palette-preview-download expressive-button">
+                      <svg class="icon small" aria-hidden="true">
+                        <use href="./assets/icons.svg#download"></use>
+                      </svg>
+                      <span>下载</span>
+                    </button>
+                  </div>
                 </div>
+                <ul class="palette-list" aria-label="选择配色">
+                  <li><button type="button" data-palette="periwinkle">蓝紫</button></li>
+                  <li><button type="button" data-palette="iris">鸢尾</button></li>
+                  <li><button type="button" data-palette="sky">天蓝</button></li>
+                  <li><button type="button" data-palette="lagoon">湖蓝</button></li>
+                  <li><button type="button" data-palette="seafoam">薄荷</button></li>
+                  <li><button type="button" data-palette="mint">青苹</button></li>
+                  <li><button type="button" data-palette="matcha">抹茶</button></li>
+                  <li><button type="button" data-palette="sand">沙金</button></li>
+                  <li><button type="button" data-palette="apricot">蜜杏</button></li>
+                  <li><button type="button" data-palette="coral">珊瑚</button></li>
+                  <li><button type="button" data-palette="sakura">樱粉</button></li>
+                  <li><button type="button" data-palette="orchid">藕荷</button></li>
+                  <li><button type="button" data-palette="lilac">丁香</button></li>
+                </ul>
+                <div class="appearance-modes" role="group" aria-label="预览明暗模式">
+                  <button
+                    type="button"
+                    class="expressive-button"
+                    data-palette-mode="light"
+                    aria-pressed="true"
+                  >
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#sun"></use>
+                    </svg>
+                    日间清新
+                  </button>
+                  <button
+                    type="button"
+                    class="expressive-button"
+                    data-palette-mode="dark"
+                    aria-pressed="false"
+                  >
+                    <svg class="icon" aria-hidden="true">
+                      <use href="./assets/icons.svg#moon"></use>
+                    </svg>
+                    夜间舒适
+                  </button>
+                </div>
+                <p class="palette-hint" role="status">选个颜色，看看效果</p>
               </div>
             </div>
           </section>
@@ -608,12 +698,7 @@
           >
             <div class="download-panel">
               <div class="download-main">
-                <button
-                  class="download-mascot"
-                  type="button"
-                  aria-label="让小电视跳一下"
-                  disabled
-                >
+                <button class="download-mascot" type="button" aria-label="让小电视跳一下" disabled>
                   <img
                     src="./assets/icon.png"
                     alt=""
@@ -639,7 +724,7 @@
                 <div class="download-actions">
                   <div class="split-button" role="group" aria-label="下载 BiliTools">
                     <a
-                      class="split-button-primary"
+                      class="split-button-primary expressive-button"
                       data-download-link
                       href="https://files.happycola.top/BiliTools/BiliTools-v3.0-arm64-v8a.apk"
                       ><svg class="icon" aria-hidden="true">
@@ -653,7 +738,7 @@
                       </span>
                     </a>
                     <button
-                      class="split-button-toggle"
+                      class="split-button-toggle expressive-button"
                       type="button"
                       popovertarget="package-menu"
                       aria-haspopup="menu"
@@ -897,7 +982,7 @@
       <div class="dialog-toolbar">
         <h2 id="dialog-title">应用界面</h2>
         <form method="dialog">
-          <button type="submit" class="icon-button" aria-label="关闭截图">
+          <button type="submit" class="icon-button expressive-button" aria-label="关闭截图">
             <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#close"></use></svg>
           </button>
         </form>
@@ -922,14 +1007,19 @@
       <div class="dialog-navigation">
         <button
           type="button"
-          class="icon-button"
+          class="icon-button expressive-button"
           data-dialog-direction="-1"
           aria-label="上一张截图"
         >
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#back"></use></svg>
         </button>
         <p class="dialog-count" aria-live="polite"></p>
-        <button type="button" class="icon-button" data-dialog-direction="1" aria-label="下一张截图">
+        <button
+          type="button"
+          class="icon-button expressive-button"
+          data-dialog-direction="1"
+          aria-label="下一张截图"
+        >
           <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow"></use></svg>
         </button>
       </div>

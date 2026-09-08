@@ -1,5 +1,6 @@
 import { bundledRelease, fetchLatestRelease, formatPackageSize } from './releases.js';
 import { createSplitButton } from './split-button.js';
+import { finishSelectionColors } from './expressive-buttons.js';
 
 export function createDownloads() {
   const section = document.querySelector('#download');
@@ -26,6 +27,7 @@ export function createDownloads() {
         String(choice.dataset.architecture === selectedArchitecture),
       );
     }
+    finishSelectionColors(choices);
     packageSummary.textContent = asset
       ? `${selectedArchitecture} · ${formatPackageSize(asset.size)}`
       : '此版本暂未提供 APK';

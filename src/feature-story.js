@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { finishSelectionColors } from './expressive-buttons.js';
 
 export function createFeatureStory(scrollExperience) {
   const section = document.querySelector('#features');
@@ -38,6 +39,7 @@ export function createFeatureStory(scrollExperience) {
       panels[index].inert = !active;
       pictures[index].setAttribute('aria-hidden', String(!active));
     });
+    finishSelectionColors(tabs);
   }
   updateAccessibility();
 

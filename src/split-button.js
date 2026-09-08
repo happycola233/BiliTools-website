@@ -1,3 +1,5 @@
+import { finishSelectionColors } from './expressive-buttons.js';
+
 export function createSplitButton(trigger, menu) {
   const lifecycle = new AbortController();
   const choices = [...menu.querySelectorAll('[role="menuitemradio"]')];
@@ -41,6 +43,7 @@ export function createSplitButton(trigger, menu) {
     'beforetoggle',
     (event) => {
       trigger.setAttribute('aria-expanded', String(event.newState === 'open'));
+      finishSelectionColors([trigger]);
       if (event.newState === 'closed') cancelAnimationFrame(positionFrame);
     },
     { signal: lifecycle.signal },

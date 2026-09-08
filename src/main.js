@@ -3,6 +3,8 @@ import { createScreenshotViewer } from './screenshot-viewer.js';
 import { createFeatureStory } from './feature-story.js';
 import { createDownloads } from './downloads.js';
 import { createDownloadMascot } from './download-mascot.js';
+import { createPalettePreview } from './palette-preview.js';
+import { createExpressiveButtons } from './expressive-buttons.js';
 
 const root = document.documentElement;
 const systemTheme = matchMedia('(prefers-color-scheme: dark)');
@@ -15,6 +17,8 @@ const featureStory = createFeatureStory(scrollExperience);
 const screenshotViewer = createScreenshotViewer(screenshotLinks, scrollExperience);
 const downloads = createDownloads();
 const downloadMascot = createDownloadMascot();
+const palettePreview = createPalettePreview();
+const expressiveButtons = createExpressiveButtons();
 
 function isDark() {
   return root.dataset.theme ? root.dataset.theme === 'dark' : systemTheme.matches;
@@ -34,6 +38,7 @@ function syncTheme() {
     link.href = dark ? picture.querySelector('source').srcset : picture.querySelector('img').src;
   }
   screenshotViewer.syncTheme();
+  palettePreview.syncTheme(dark);
 }
 
 themeToggle.hidden = false;
@@ -75,7 +80,9 @@ updateGalleryControls();
 
 if (import.meta.hot)
   import.meta.hot.dispose(() => {
+    expressiveButtons.destroy();
     downloadMascot.destroy();
+    palettePreview.destroy();
     downloads.destroy();
     featureStory.destroy();
     screenshotViewer.destroy();

@@ -52,6 +52,9 @@ const icons = {
   folder: 'ic_folder_24',
   phone: 'ic_mobile_vibrate_24',
   close: 'ic_close_rounded_24',
+  'output-audiovisual': 'ic_output_movie_24',
+  'output-video': 'ic_output_video_file_24',
+  'output-audio': 'ic_output_audio_file_24',
 };
 const symbols = [];
 for (const [name, filename] of Object.entries(icons)) {
