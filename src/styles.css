@@ -582,8 +582,9 @@ button:disabled {
   border-radius: 32px;
   background: var(--app-bar-container);
   box-shadow: var(--app-bar-shadow);
+  /* 只写标准属性，-webkit- 前缀由构建按目标浏览器补上。手写的前缀紧跟在标准属性之后时，
+     Lightning CSS 压缩会删掉标准属性，Chrome 不认前缀，模糊就会失效。 */
   backdrop-filter: var(--app-bar-backdrop);
-  -webkit-backdrop-filter: var(--app-bar-backdrop);
   transform: translateX(-50%);
   transition: background-color var(--motion-color);
 }
@@ -592,7 +593,6 @@ button:disabled {
   .top-app-bar {
     background: var(--app-bar-tone);
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 }
 .brand {

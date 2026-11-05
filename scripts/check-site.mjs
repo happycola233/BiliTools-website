@@ -66,6 +66,9 @@ for (const [index, pagePath] of pagePaths.entries()) {
       assert.ok(!filename.startsWith('/'), 'CSS asset must use a relative path');
       await access(path.resolve(path.dirname(stylesheetPath), filename));
     }
+    // 压缩后若只剩 -webkit- 前缀，Chrome 与 Firefox 会丢失模糊；开发服务不压缩，看不出这类问题。
+    for (const [rule] of css.matchAll(/\{[^{}]*-webkit-backdrop-filter:[^{}]*\}/g))
+      assert.ok(/[{;]backdrop-filter:/.test(rule), `CSS lost unprefixed backdrop-filter: ${rule}`);
   }
 }
 
