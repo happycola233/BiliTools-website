@@ -27,7 +27,7 @@ npm run check
 npm test
 ```
 
-`dist/` 是完整的静态网站，可部署到 GitHub Pages、Cloudflare Pages 或其他静态托管服务。资源使用相对路径，支持根目录及项目子路径。构建产物和依赖均已忽略，不影响 Android 构建。Sites 的静态输出配置保存在 `.openai/hosting.json`；注册不代表已经发布。
+`dist/` 是完整的静态网站，可部署到 GitHub Pages、Cloudflare Pages 或其他静态托管服务。资源使用相对路径，支持根目录及项目子路径。`dist/` 与 `node_modules/` 不纳入版本控制。
 
 ## 多语言
 
@@ -79,7 +79,7 @@ python scripts/generate-font.py
 
 Android 仓库位于其他位置时，将项目根目录作为最后一个参数传入，例如 `python scripts/generate-font.py D:\Projects\BiliTools`。
 
-字体遵循 SIL Open Font License 1.1，完整文本见 `public/assets/licenses/Google-Sans-Flex-OFL.txt`，字体文件内的原始版权与许可证元数据亦予保留。App 素材和网站源码遵循项目根目录的开源协议。第三方 GSAP 使用其[标准许可](https://gsap.com/standard-license/)，构建保留库内的许可声明。
+字体遵循 SIL Open Font License 1.1，完整文本见 `public/assets/licenses/Google-Sans-Flex-OFL.txt`，字体文件内的原始版权与许可证元数据亦予保留。
 
 ## 页面结构与交互
 
@@ -106,3 +106,7 @@ Android 仓库位于其他位置时，将项目根目录作为最后一个参数
 接口、架构与组件参考：[GitHub 最新发行版 API](https://docs.github.com/en/rest/releases/releases#get-the-latest-release)、[Android ABI 说明](https://developer.android.com/ndk/guides/abis)、[M3 Expressive Split button](https://m3.material.io/components/split-button)、[WAI-ARIA 菜单按钮模式](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/)、[WAI-ARIA 标签页模式](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/)、[Google 多语言网站指南](https://developers.google.com/search/docs/specialty/international/managing-multi-regional-sites)。Material 当前尚未提供 Expressive split button 的官方 Web 实现，本站沿用原生 HTML / CSS / JavaScript 实现交互与设计规范。
 
 设计和实现参考：[Material 3 Expressive](https://m3.material.io/blog/building-with-m3-expressive)、[ScrollSmoother](https://gsap.com/docs/v3/Plugins/ScrollSmoother/)、[ScrollTrigger](https://gsap.com/docs/v3/Plugins/ScrollTrigger/)、[Google Sans 字体许可](https://github.com/googlefonts/googlesans/blob/main/OFL.txt)。项目色彩依据 `../BiliTools/docs/配色系统/`，未修改 Android 的生成配色文件。
+
+## 开源协议
+
+网站源码及其中来自 App 的图标、截图与配色遵循 [GPL-3.0-or-later](LICENSE)，与 [BiliTools Android](https://github.com/happycola233/BiliTools) 一致。第三方内容保留各自的许可：Google Sans Flex 字体见上文「字体」；GSAP 使用其[标准许可](https://gsap.com/standard-license/)，构建保留库内 `/*! @license */` 形式的版权声明；canvas-confetti 遵循 ISC 许可。
