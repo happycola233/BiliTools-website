@@ -22,6 +22,12 @@ export function createPaletteCelebration(button, status) {
     timers.add(timer);
   }
 
+  // 庆祝时下载图标换成对勾。<svg> 不是 HTMLElement，没有 hidden 属性，需直接切换 hidden 特性。
+  function showDoneIcon(done) {
+    idleIcon.toggleAttribute('hidden', done);
+    doneIcon.toggleAttribute('hidden', !done);
+  }
+
   function stop() {
     run++;
     for (const timer of timers) clearTimeout(timer);
@@ -29,8 +35,7 @@ export function createPaletteCelebration(button, status) {
     launch?.reset();
     canvas?.remove();
     label.textContent = t('previewDownload');
-    idleIcon.hidden = false;
-    doneIcon.hidden = true;
+    showDoneIcon(false);
     status.textContent = defaultMessage;
   }
 
@@ -39,8 +44,7 @@ export function createPaletteCelebration(button, status) {
     stop();
     const currentRun = run;
     label.textContent = t('celebrate');
-    idleIcon.hidden = true;
-    doneIcon.hidden = false;
+    showDoneIcon(true);
     status.textContent = t('celebrateMessage', { name });
     if (reducedMotion.matches) {
       later(stop, 2600);
