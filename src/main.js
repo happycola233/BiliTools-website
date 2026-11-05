@@ -1,24 +1,27 @@
 import { createScrollExperience } from './motion.js';
 import { createScreenshotViewer } from './screenshot-viewer.js';
-import { createFeatureStory } from './feature-story.js';
+import { createShowcase } from './showcase.js';
 import { createDownloads } from './downloads.js';
 import { createDownloadMascot } from './download-mascot.js';
 import { createPalettePreview } from './palette-preview.js';
 import { createExpressiveButtons } from './expressive-buttons.js';
+import { createLanguageSwitch } from './language.js';
+import { createFaq } from './faq.js';
+import { t } from './i18n.js';
 
 const root = document.documentElement;
 const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const themeToggle = document.querySelector('.theme-toggle');
 const themeSources = document.querySelectorAll('[data-theme-source]');
-const screenshotLinks = [...document.querySelectorAll('.screenshot-link')];
 const scrollExperience = createScrollExperience();
-const featureStory = createFeatureStory(scrollExperience);
-const screenshotViewer = createScreenshotViewer(screenshotLinks, scrollExperience);
+const showcase = createShowcase();
+const screenshotViewer = createScreenshotViewer(scrollExperience, { onClose: showcase.select });
 const downloads = createDownloads();
 const downloadMascot = createDownloadMascot();
 const palettePreview = createPalettePreview();
 const expressiveButtons = createExpressiveButtons();
+const languageSwitch = createLanguageSwitch();
+const faq = createFaq({ onLayoutChange: scrollExperience.refresh });
 
 function isDark() {
   return root.dataset.theme ? root.dataset.theme === 'dark' : systemTheme.matches;
@@ -26,17 +29,14 @@ function isDark() {
 
 function syncTheme() {
   const dark = isDark();
-  const label = `切换为${dark ? '浅' : '深'}色模式`;
+  const label = t(dark ? 'themeToLight' : 'themeToDark');
   themeToggle.setAttribute('aria-label', label);
   themeToggle.title = label;
   themeToggle.querySelector('.theme-moon').style.display = dark ? 'none' : 'block';
   themeToggle.querySelector('.theme-sun').style.display = dark ? 'block' : 'none';
-  document.querySelector('meta[name="theme-color"]').content = dark ? '#15171c' : '#f8f9ff';
+  document.querySelector('meta[name="theme-color"]').content = dark ? '#111216' : '#f8f7fc';
+  // 手动切换主题时，截图也跟随页面主题，而不只跟随系统偏好。
   for (const source of themeSources) source.media = dark ? 'all' : 'not all';
-  for (const link of screenshotLinks) {
-    const picture = link.querySelector('picture');
-    link.href = dark ? picture.querySelector('source').srcset : picture.querySelector('img').src;
-  }
   screenshotViewer.syncTheme();
   palettePreview.syncTheme(dark);
 }
@@ -56,40 +56,8 @@ systemTheme.addEventListener('change', () => {
   if (!root.dataset.theme) syncTheme();
 });
 
-const gallery = document.querySelector('#screenshot-gallery');
-const galleryButtons = [...document.querySelectorAll('[data-gallery-direction]')];
-document.querySelector('.gallery-controls').hidden = false;
-function updateGalleryControls() {
-  galleryButtons[0].disabled = gallery.scrollLeft <= 1;
-  galleryButtons[1].disabled = gallery.scrollLeft >= gallery.scrollWidth - gallery.clientWidth - 1;
-}
-for (const button of galleryButtons) {
-  button.addEventListener('click', () => {
-    // 用相邻卡片的实际间距计算步长，适配浏览器缩放与响应式尺寸。
-    const cards = gallery.querySelectorAll('.screenshot-card');
-    const step = cards[1].offsetLeft - cards[0].offsetLeft;
-    gallery.scrollBy({
-      left: Number(button.dataset.galleryDirection) * step,
-      behavior: reducedMotion.matches ? 'instant' : 'smooth',
-    });
-  });
-}
-gallery.addEventListener('scroll', updateGalleryControls, { passive: true });
-new ResizeObserver(updateGalleryControls).observe(gallery);
-updateGalleryControls();
-
-if (import.meta.hot)
-  import.meta.hot.dispose(() => {
-    expressiveButtons.destroy();
-    downloadMascot.destroy();
-    palettePreview.destroy();
-    downloads.destroy();
-    featureStory.destroy();
-    screenshotViewer.destroy();
-    scrollExperience.destroy();
-  });
-
-const navigationLinks = [...document.querySelectorAll('.main-nav a')];
+// 顶栏导航高亮当前阅读的区块。
+const navigationLinks = [...document.querySelectorAll('.nav-pill a')];
 const sectionObserver = new IntersectionObserver(
   (entries) => {
     for (const entry of entries) {
@@ -100,6 +68,20 @@ const sectionObserver = new IntersectionObserver(
       }
     }
   },
-  { rootMargin: '-20% 0px -40% 0px' },
+  { rootMargin: '-35% 0px -55% 0px' },
 );
 for (const link of navigationLinks) sectionObserver.observe(document.querySelector(link.hash));
+
+if (import.meta.hot)
+  import.meta.hot.dispose(() => {
+    sectionObserver.disconnect();
+    faq.destroy();
+    languageSwitch.destroy();
+    expressiveButtons.destroy();
+    downloadMascot.destroy();
+    palettePreview.destroy();
+    downloads.destroy();
+    screenshotViewer.destroy();
+    showcase.destroy();
+    scrollExperience.destroy();
+  });

@@ -1,9 +1,11 @@
 import confetti from 'canvas-confetti';
+import { t } from './i18n.js';
 
 export function createPaletteCelebration(button, status) {
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const lifecycle = new AbortController();
-  const icon = button.querySelector('use');
+  const idleIcon = button.querySelector('[data-celebration-icon="idle"]');
+  const doneIcon = button.querySelector('[data-celebration-icon="done"]');
   const label = button.querySelector('span');
   const defaultMessage = status.textContent;
   const timers = new Set();
@@ -26,8 +28,9 @@ export function createPaletteCelebration(button, status) {
     timers.clear();
     launch?.reset();
     canvas?.remove();
-    label.textContent = '下载';
-    icon.setAttribute('href', './assets/icons.svg#download');
+    label.textContent = t('previewDownload');
+    idleIcon.hidden = false;
+    doneIcon.hidden = true;
     status.textContent = defaultMessage;
   }
 
@@ -35,9 +38,10 @@ export function createPaletteCelebration(button, status) {
     // 连点重新播放同一场彩带，避免粒子与延时任务无限叠加。
     stop();
     const currentRun = run;
-    label.textContent = '好耶';
-    icon.setAttribute('href', './assets/icons.svg#check');
-    status.textContent = `送你一份${name}色的好心情！`;
+    label.textContent = t('celebrate');
+    idleIcon.hidden = true;
+    doneIcon.hidden = false;
+    status.textContent = t('celebrateMessage', { name });
     if (reducedMotion.matches) {
       later(stop, 2600);
       return;

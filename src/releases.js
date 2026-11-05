@@ -3,20 +3,23 @@ const latestReleaseUrl = 'https://api.github.com/repos/happycola233/BiliTools/re
 const acceleratedDownloadBase = 'https://files.happycola.top/BiliTools/';
 const apkPattern = /^BiliTools-[\w.+-]+-(arm64-v8a|armeabi-v7a|universal|x86|x86_64)\.apk$/;
 
-// 2026-09-08 核对过的发行版快照：首次加载和网络不可用时仍能下载，界面不将它标为最新。
+export const defaultArchitecture = 'arm64-v8a';
+
+// 2026-11-05 核对过的发行版快照（GitHub 资产大小与加速镜像一致）：首次加载和网络不可用时仍能下载，
+// 界面不将它标为最新。构建时 i18n 插件也用它生成关闭 JavaScript 时的静态下载链接。
 export const bundledRelease = {
-  version: 'v3.0',
-  publishedAt: '2026-09-07T04:53:50Z',
-  url: `${repositoryUrl}/releases/tag/v3.0`,
+  version: 'v3.2',
+  publishedAt: '2026-10-15T07:01:24Z',
+  url: `${repositoryUrl}/releases/tag/v3.2`,
   packages: Object.fromEntries(
     [
-      ['arm64-v8a', 70765340],
-      ['armeabi-v7a', 69948205],
-      ['universal', 154047534],
-      ['x86', 74414890],
-      ['x86_64', 75729491],
+      ['arm64-v8a', 71927807],
+      ['armeabi-v7a', 71110672],
+      ['universal', 155210001],
+      ['x86', 75577357],
+      ['x86_64', 76891958],
     ].map(([architecture, size]) => {
-      const name = `BiliTools-v3.0-${architecture}.apk`;
+      const name = `BiliTools-v3.2-${architecture}.apk`;
       return [
         architecture,
         {
@@ -31,6 +34,16 @@ export const bundledRelease = {
 
 export function formatPackageSize(bytes) {
   return `${(bytes / 1024 ** 2).toFixed(1)} MiB`;
+}
+
+/**
+ * 发布日期按页面语言显示，例如「2026 年 10 月 15 日」或「October 15, 2026」。
+ * Intl 的中文结果是「2026年10月15日」，按中文排版习惯在数字与汉字之间补上空格。
+ */
+export function formatReleaseDate(isoDate, locale) {
+  return new Intl.DateTimeFormat(locale, { year: 'numeric', month: 'long', day: 'numeric' })
+    .format(new Date(isoDate))
+    .replace(/(?<=\d)(?=\p{Script=Han})|(?<=\p{Script=Han})(?=\d)/gu, ' ');
 }
 
 export function parseRelease(data) {

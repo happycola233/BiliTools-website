@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "lang": "en",
+    "ogLocale": "en_US",
+    "title": "BiliTools · Bilibili downloader for Android",
+    "description": "BiliTools is a free, open-source Bilibili parser and downloader for Android. Save videos, anime, music and articles, pick your quality, and export subtitles and danmaku. Available in 13 languages.",
+    "ogDescription": "Start with a link and keep the videos, anime, music and articles you love. Free, open source, made for Android.",
+    "skipLink": "Skip to main content",
+    "home": "BiliTools home",
+    "alternateHref": "../",
+    "alternateLang": "zh-CN",
+    "alternateName": "中文",
+    "alternateLabel": "切换到中文"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "features": "Features",
+    "screens": "Screens",
+    "download": "Download",
+    "faq": "FAQ"
+  },
+  "header": {
+    "theme": "Switch to dark mode",
+    "github": "View the BiliTools source on GitHub (opens in a new tab)"
+  },
+  "hero": {
+    "eyebrow": "Free & open source · Made for Android",
+    "titleLead": "Love it?<br>Keep it ",
+    "titleAccent": "close",
+    "titleTail": ".",
+    "description": "Videos you love, music you want to hear, articles worth rereading.<br>Save them with BiliTools and open them anytime.",
+    "download": "Download BiliTools",
+    "source": "View source",
+    "meta": "Android 10 or later · GPL-3.0",
+    "scrollCue": "Scroll to explore",
+    "visualLabel": "BiliTools anime parsing, download options and download screens",
+    "altOptions": "Download and export panel with quality, subtitle and danmaku options",
+    "altAnime": "Anime parsing screen with show details and an episode list",
+    "altDownloads": "Downloads grouped by title with live progress"
+  },
+  "content": {
+    "label": "Works with",
+    "video": "Videos",
+    "anime": "Anime & shows",
+    "course": "Courses",
+    "audio": "Music",
+    "article": "Articles",
+    "favorites": "Favorites",
+    "later": "Watch later",
+    "space": "Creator pages"
+  },
+  "features": {
+    "eyebrow": "Features",
+    "title": "From one link to a complete collection.",
+    "description": "Parse, pick, download and organize, all in one app.",
+    "share": {
+      "title": "Share to parse",
+      "description": "Choose Share → BiliTools in Bilibili or any other app, then parse and download right in the pop-up panel without switching apps. You can also paste a link or type an ID.",
+      "idsLabel": "Supported IDs"
+    },
+    "quality": {
+      "title": "Top-tier quality",
+      "description": "Up to 8K, Dolby Vision and HDR, plus Hi-Res lossless and Dolby Atmos audio, with AVC, HEVC and AV1 codecs to choose from.",
+      "note": "Available quality depends on the content and your account."
+    },
+    "export": {
+      "title": "Export everything",
+      "description": "Subtitles, AI summaries, current and historical danmaku, NFO metadata, covers and posters. Articles are saved as Markdown, and tags and covers can be written into audio and video files.",
+      "formatsLabel": "Export formats"
+    },
+    "batch": {
+      "title": "Batch downloads, kept tidy",
+      "description": "Select episodes, collections, favorites and playlists in one go. Downloads are grouped by title with live progress, and naming templates keep your files organized."
+    },
+    "languages": {
+      "title": "13 interface languages",
+      "description": "Every language is built in and switches instantly. Arabic uses a right-to-left layout."
+    },
+    "privacy": {
+      "title": "Your data stays on your device",
+      "description": "Login credentials, settings and download records are stored only on your device. Diagnostic reports are never uploaded automatically; you preview them and decide whether to share. BiliTools is free and open source.",
+      "action": "View source on GitHub"
+    }
+  },
+  "screens": {
+    "eyebrow": "Screens",
+    "title": "Take a look inside.",
+    "description": "Familiar controls that feel right at home. Tap a screenshot to view it larger.",
+    "tabsLabel": "Choose a screen",
+    "previous": "Previous screen",
+    "next": "Next screen",
+    "parse": {
+      "title": "Parse",
+      "description": "Paste a link or type an ID, and the content type is detected automatically.",
+      "alt": "Parse screen for pasting a link or typing an ID",
+      "zoom": "View the Parse screen larger"
+    },
+    "anime": {
+      "title": "Anime & episodes",
+      "description": "See show details and select episodes by season, version or group.",
+      "alt": "Anime parsing screen with show details and an episode list",
+      "zoom": "View the Anime & episodes screen larger"
+    },
+    "options": {
+      "title": "Download & export",
+      "description": "Pick the output type and quality, then take subtitles, danmaku and metadata along.",
+      "alt": "Download and export panel with output type, quality, subtitle and danmaku options",
+      "zoom": "View the Download & export screen larger"
+    },
+    "details": {
+      "title": "Details",
+      "description": "IDs, attributes, cast and staff at a glance, and every field can be copied.",
+      "alt": "Details screen listing IDs, attributes and production credits",
+      "zoom": "View the Details screen larger"
+    },
+    "downloads": {
+      "title": "Downloads",
+      "description": "Grouped by title with live progress. Pause and resume anytime.",
+      "alt": "Downloads screen with tasks grouped by title and live progress",
+      "zoom": "View the Downloads screen larger"
+    },
+    "history": {
+      "title": "Watch history",
+      "description": "Browse by category and time, with search and filters.",
+      "alt": "Watch history screen with viewing progress and filters",
+      "zoom": "View the Watch history screen larger"
+    },
+    "me": {
+      "title": "Me",
+      "description": "Your profile, favorites and Watch later, ready for batch download.",
+      "alt": "Me screen with profile, favorites and Watch later",
+      "zoom": "View the Me screen larger"
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "General, downloads, naming and appearance, set up your way.",
+      "alt": "Settings screen with General, Downloads, Naming, Appearance and About",
+      "zoom": "View the Settings screen larger"
+    }
+  },
+  "appearance": {
+    "eyebrow": "Appearance",
+    "title": "Beautiful,<br>and very you.",
+    "description": "Thirteen original color schemes to choose from. Fresh by day, gentle by night, or matched to your wallpaper. Rounded controls and clear liquid glass make every visit feel good.",
+    "label": "13 color schemes · Light, dark and pure black",
+    "region": "Color scheme preview",
+    "previewTitle": "Download and export",
+    "previewName": "Periwinkle · Light",
+    "outputLabel": "Output type",
+    "outputAudiovisual": "Audio + video",
+    "outputVideo": "Video only",
+    "outputAudio": "Audio only",
+    "quality": "1080P · DASH",
+    "download": "Download",
+    "palettesLabel": "Choose a color scheme",
+    "modesLabel": "Preview light or dark mode",
+    "light": "Light",
+    "dark": "Dark",
+    "hint": "Pick a color to see it in action",
+    "palettes": {
+      "periwinkle": "Periwinkle",
+      "iris": "Iris",
+      "sky": "Sky",
+      "lagoon": "Lagoon",
+      "seafoam": "Seafoam",
+      "mint": "Mint",
+      "matcha": "Matcha",
+      "sand": "Sand",
+      "apricot": "Apricot",
+      "coral": "Coral",
+      "sakura": "Sakura",
+      "orchid": "Orchid",
+      "lilac": "Lilac"
+    }
+  },
+  "download": {
+    "eyebrow": "Download",
+    "title": "Not just online.<br>Take what you love with you.",
+    "description": "Download BiliTools and keep what you want to watch right on your phone.",
+    "mascot": "Make the little TV jump",
+    "releaseLabel": "Released version",
+    "releasedPrefix": "Released",
+    "groupLabel": "Download BiliTools",
+    "primary": "Download BiliTools",
+    "chooseLabel": "Choose a package",
+    "packageLabel": "Package",
+    "packageHint": "arm64-v8a suits most phones. If you're not sure, choose the universal package.",
+    "retry": "Try again",
+    "noscriptLead": "The",
+    "noscriptTail": "arm64-v8a package is available here. To choose another package or check for a newer version, visit",
+    "noscriptLink": "GitHub Releases",
+    "noscriptEnd": ".",
+    "guideTitle": "Before you start",
+    "requirementTitle": "Android 10 or later",
+    "requirementText": "Works on phones and tablets.",
+    "packagesTitle": "Same features, different devices",
+    "packagesText": "Every package has the same features; they differ only in processor architecture and file size. The universal package includes all four architectures and is larger to download.",
+    "updateTitle": "Update right in the app",
+    "updateText": "Open Settings → About → Check for updates to get the right package for your device.",
+    "releaseNotes": "Release notes",
+    "allReleases": "All releases",
+    "repository": "Source code",
+    "installGuide": "Install guide",
+    "installGuideUrl": "https://github.com/happycola233/BiliTools/blob/main/README.en.md#installation"
+  },
+  "packages": {
+    "title": "Choose a package",
+    "hint": "Same features, pick the one for your device.",
+    "recommended": "Recommended",
+    "arm64": "64-bit ARM · Most phones and tablets",
+    "armv7": "32-bit ARM · Older devices",
+    "universal": "Universal · All four architectures, larger file",
+    "x86": "32-bit x86 · Some emulators and devices",
+    "x86_64": "64-bit x86 · Some emulators and devices",
+    "footer": "Not sure which one? Choose the universal package."
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Questions?",
+    "description": "Answers to the questions people ask most. Can't find yours? Feel free to",
+    "feedback": "ask on GitHub",
+    "login": {
+      "question": "Do I need a Bilibili account?",
+      "answer": "No. You can parse and download without logging in. Logging in unlocks the higher video and audio quality available to your account, and historical danmaku also requires login. You can log in with a QR code, a password or an SMS code."
+    },
+    "package": {
+      "question": "Which package should I download?",
+      "answer": "arm64-v8a suits most phones and tablets. If you're not sure about your device, choose the universal package, which includes all four architectures and is larger. Every package has the same features."
+    },
+    "location": {
+      "question": "Where are downloaded files saved?",
+      "answer": "In the Download/BiliTools folder on your phone by default. You can choose another subfolder under Download in Settings → Download, and customize folder and file names in Settings → Naming."
+    },
+    "quality": {
+      "question": "Why can't I select some quality options?",
+      "answer": "Available video quality, audio quality and extras depend on what the video or audio offers and on your account's permissions. Logging in unlocks the higher quality available to your account."
+    },
+    "update": {
+      "question": "How do I update to a new version?",
+      "answer": "Open Settings → About → Check for updates. The app downloads the right package for your device, with mirror support for faster downloads. You can also come back to this page anytime."
+    },
+    "privacy": {
+      "question": "Is my data uploaded anywhere?",
+      "answer": "No. Login credentials, settings and download records are stored only on your device, and the app offers no cloud sync. Diagnostic reports are created on your device with credentials, IP addresses and your account UID removed, and you decide whether to share them after previewing."
+    }
+  },
+  "footer": {
+    "tagline": "A free, open-source Bilibili media parser and downloader.",
+    "productTitle": "Product",
+    "projectTitle": "Project",
+    "source": "Source code",
+    "changelog": "Changelog",
+    "issues": "Report an issue",
+    "license": "GPL-3.0 license",
+    "copyright": "© 2026 BiliTools contributors",
+    "disclaimer": "“哔哩哔哩” and “Bilibili”, their names and logos are trademarks of Shanghai Huandian Information Technology Co., Ltd. This project has no affiliation, partnership, authorization or endorsement from Bilibili or its affiliates."
+  },
+  "dialog": {
+    "title": "App screens",
+    "close": "Close",
+    "previous": "Previous screenshot",
+    "next": "Next screenshot"
+  },
+  "app": {
+    "themeToLight": "Switch to light mode",
+    "themeToDark": "Switch to dark mode",
+    "releaseLatest": "Latest version",
+    "releasePublished": "Released version",
+    "releaseChecking": "Checking for the latest version…",
+    "releaseNoAssets": "A new version is out, but its packages aren't uploaded yet.",
+    "releaseFailed": "Couldn't check for updates. You can download {version} now or try again later.",
+    "packageUnavailable": "No APK for this version yet",
+    "packageNotProvided": "Not available",
+    "packageBytes": "{size} bytes",
+    "downloadLabel": "Download {name}",
+    "paletteLight": "Light",
+    "paletteDark": "Dark",
+    "qualityAudiovisual": "1080P · DASH",
+    "qualityVideo": "1080P · No audio",
+    "qualityAudio": "192K · M4A",
+    "previewDownload": "Download",
+    "celebrate": "Yay!",
+    "celebrateMessage": "A little {name} joy, just for you!",
+    "languageSuggestion": "This page is also available in English.",
+    "languageSuggestionAction": "Switch to English",
+    "dismiss": "Dismiss"
+  }
+}

@@ -6,7 +6,7 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export function createScrollExperience() {
   const media = gsap.matchMedia();
-  const header = document.querySelector('.site-header');
+  const header = document.querySelector('.top-app-bar');
   let smoother;
   const headerOffset = () => header.getBoundingClientRect().bottom + 12;
 
@@ -20,10 +20,12 @@ export function createScrollExperience() {
         smooth: 0.6,
         effects: false,
         // 锚点已按导航栏偏移定位，不再让插件把获得焦点的整段内容滚到居中。
+        // 鼠标或触摸点击按钮时不滚动页面，只在键盘聚焦（:focus-visible）时把目标带入视野。
         onFocusIn: (_instance, event) =>
+          event.target.matches(':focus-visible') &&
           !document.querySelector('.screenshot-dialog').open &&
           !event.target.closest('[popover]') &&
-          !event.target.closest('.palette-composition') &&
+          !event.target.closest('.palette-composition, .showcase-tabs') &&
           !event.target.matches('[tabindex="-1"]'),
       });
     }
@@ -37,9 +39,17 @@ export function createScrollExperience() {
         defaults: { ease: 'none' },
         scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true },
       })
-      .to('.hero-phone-series', { y: 24 }, 0)
-      .to('.hero-phone-options', { y: -16 }, 0)
-      .to('.hero-phone-download', { y: 12 }, 0);
+      .to('.hero-device-anime', { y: 24 }, 0)
+      .to('.hero-device-options', { y: -16 }, 0)
+      .to('.hero-device-downloads', { y: 12 }, 0);
+    // 区块进场：只改透明度与位移，元素始终可聚焦，键盘访问不会被跳过。
+    gsap.set('.reveal', { opacity: 0, y: 28 });
+    ScrollTrigger.batch('.reveal', {
+      start: 'top 90%',
+      once: true,
+      onEnter: (batch) =>
+        gsap.to(batch, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 }),
+    });
     return () => {
       smoother?.kill();
       smoother = undefined;
@@ -99,6 +109,10 @@ export function createScrollExperience() {
     },
     setPaused(paused) {
       smoother?.paused(paused);
+    },
+    // 页面高度变化（如展开问答）后重新计算滚动范围与触发位置。
+    refresh() {
+      ScrollTrigger.refresh();
     },
     destroy() {
       document.removeEventListener('click', onAnchorClick);

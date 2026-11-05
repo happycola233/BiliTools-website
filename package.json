@@ -13,7 +13,7 @@
     "assets": "node scripts/generate-assets.mjs",
     "palettes": "node scripts/generate-palettes.mjs",
     "check": "node scripts/check-site.mjs",
-    "test": "node --test scripts/releases.test.mjs"
+    "test": "node --test scripts/*.test.mjs"
   },
   "devDependencies": {
     "sharp": "0.35.4",

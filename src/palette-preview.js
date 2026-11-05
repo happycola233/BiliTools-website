@@ -1,6 +1,15 @@
 import palettes from './palettes.json';
 import { createPaletteCelebration } from './palette-celebration.js';
 import { finishSelectionColors } from './expressive-buttons.js';
+import { lobes, shapePolygon } from './material-shapes.js';
+import { t } from './i18n.js';
+
+// 色块的静止与悬停形状：圆形，以及与 App「关于」页图标底座同族、瓣更浅更柔的九瓣饼干形。
+// 圆形也按同样的点数生成，两者之间才能平滑过渡。
+const SWATCH_SHAPES = {
+  '--swatch-rest-shape': shapePolygon(lobes(9, 0, 0)),
+  '--swatch-active-shape': shapePolygon(lobes(9, 0.08, 0.15)),
+};
 
 export function createPalettePreview() {
   const composition = document.querySelector('.palette-composition');
@@ -22,6 +31,12 @@ export function createPalettePreview() {
   let mode = 'light';
   let selectedOutput = 0;
 
+  const paletteList = composition.querySelector('.palette-list');
+  for (const [property, shape] of Object.entries(SWATCH_SHAPES))
+    paletteList.style.setProperty(property, shape);
+
+  const nameOf = (button) => button.querySelector('.palette-name').textContent;
+
   function applyColors(element, palette) {
     for (const [role, color] of Object.entries(palettes[palette][mode])) {
       const property = role.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
@@ -31,7 +46,7 @@ export function createPalettePreview() {
 
   function render() {
     applyColors(composition, selected.dataset.palette);
-    previewName.textContent = `${selected.dataset.name} · ${mode === 'dark' ? '夜间' : '日间'}`;
+    previewName.textContent = `${nameOf(selected)} · ${t(mode === 'dark' ? 'paletteDark' : 'paletteLight')}`;
     for (const button of buttons) {
       button.setAttribute('aria-pressed', String(button === selected));
     }
@@ -44,7 +59,7 @@ export function createPalettePreview() {
       button.tabIndex = position === index ? 0 : -1;
     }
     finishSelectionColors(outputs);
-    quality.textContent = ['1080P · DASH', '1080P · 无音轨', '192K · M4A'][index];
+    quality.textContent = t(['qualityAudiovisual', 'qualityVideo', 'qualityAudio'][index]);
   }
 
   outputs.forEach((button, index) => {
@@ -78,7 +93,7 @@ export function createPalettePreview() {
           palettes[paletteNames[(index + offset + paletteNames.length) % paletteNames.length]].light
             .primaryFixedDim,
       );
-      celebration.play(colors, selected.dataset.name);
+      celebration.play(colors, nameOf(selected));
     },
     options,
   );
@@ -94,13 +109,6 @@ export function createPalettePreview() {
   }
 
   for (const button of buttons) {
-    const name = button.textContent;
-    button.dataset.name = name;
-    button.classList.add('expressive-button');
-    button.setAttribute('aria-controls', preview.id);
-    button.innerHTML = `<span class="palette-swatch" aria-hidden="true">
-      <svg class="icon palette-check"><use href="./assets/icons.svg#check"></use></svg>
-    </span><span class="palette-name">${name}</span>`;
     button.addEventListener(
       'click',
       () => {
@@ -129,6 +137,7 @@ export function createPalettePreview() {
     destroy() {
       celebration.destroy();
       lifecycle.abort();
+      for (const property of Object.keys(SWATCH_SHAPES)) paletteList.style.removeProperty(property);
     },
   };
 }

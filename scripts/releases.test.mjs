@@ -1,13 +1,19 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { test } from 'node:test';
+import { fileURLToPath } from 'node:url';
 import {
   bundledRelease,
+  defaultArchitecture,
   fetchLatestRelease,
   formatPackageSize,
+  formatReleaseDate,
   parseRelease,
   repositoryUrl,
 } from '../src/releases.js';
+import { PAGES, loadLocale, renderPage } from './i18n-pages.mjs';
+
+const websiteRoot = fileURLToPath(new URL('../', import.meta.url));
 
 const architectures = ['arm64-v8a', 'armeabi-v7a', 'universal', 'x86', 'x86_64'];
 function releaseFixture(version = 'v3.1') {
@@ -110,13 +116,30 @@ test('displays binary file sizes with matching MiB units', () => {
   assert.equal(formatPackageSize(154047534), '146.9 MiB');
 });
 
+test('release dates keep a space between digits and Chinese characters', () => {
+  // 取当天正午，避免运行环境的时区把日期推到前后一天。
+  const date = '2026-11-05T12:00:00';
+  assert.equal(formatReleaseDate(date, 'zh-CN'), '2026 年 11 月 5 日');
+  assert.equal(formatReleaseDate(date, 'en'), 'November 5, 2026');
+});
+
 test('the static no-JavaScript download matches the bundled release snapshot', async () => {
-  const html = await readFile(new URL('../index.html', import.meta.url), 'utf8');
-  const asset = bundledRelease.packages['arm64-v8a'];
-  for (const value of [asset.name, asset.acceleratedUrl, formatPackageSize(asset.size)]) {
-    assert.ok(html.includes(value), `Static download differs from bundled snapshot: ${value}`);
+  const template = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+  const asset = bundledRelease.packages[defaultArchitecture];
+  for (const { locale } of PAGES) {
+    const html = renderPage(template, locale, loadLocale(websiteRoot, locale));
+    for (const value of [
+      asset.acceleratedUrl,
+      formatPackageSize(asset.size),
+      bundledRelease.version,
+    ]) {
+      assert.ok(html.includes(value), `${locale}: static download differs from snapshot: ${value}`);
+    }
+    assert.match(
+      html,
+      new RegExp(`data-architecture="${defaultArchitecture}"\\s+aria-checked="true"`),
+    );
   }
-  assert.match(html, /data-architecture="arm64-v8a"\s+aria-checked="true"/);
 });
 
 test('requests GitHub latest metadata without credentials and passes its abort signal', async (t) => {

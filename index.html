@@ -1,31 +1,29 @@
 <!doctype html>
-<html lang="zh-CN">
+<!--
+  页面模板：双花括号占位符由 scripts/i18n-pages.mjs 按 src/locales/*.json 渲染，
+  生成中文页（本文件）与英文页（en/index.html）。资源一律写根路径，构建时按各页面位置转为相对路径。
+-->
+<html lang="{{meta.lang}}">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
-    <meta name="theme-color" content="#f8f9ff" />
-    <meta
-      name="description"
-      content="BiliTools 是免费开源的 Android 哔哩哔哩解析与下载工具。保存视频、番剧、音乐与图文，自选音画质，导出字幕和弹幕。探索真实界面并下载最新 APK。"
-    />
+    <meta name="theme-color" content="#f5f4fa" />
+    <meta name="description" content="{{meta.description}}" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="BiliTools · 把喜欢的，留在身边" />
-    <meta
-      property="og:description"
-      content="从一条链接开始，收藏视频、番剧、音乐与图文。免费开源，为 Android 而生。"
-    />
-    <meta property="og:locale" content="zh_CN" />
-    <title>BiliTools · 把喜欢的，留在身边</title>
-    <link rel="icon" type="image/png" href="./assets/icon.png" />
+    <meta property="og:title" content="{{meta.title}}" />
+    <meta property="og:description" content="{{meta.ogDescription}}" />
+    <meta property="og:locale" content="{{meta.ogLocale}}" />
+    <title>{{meta.title}}</title>
+    <link rel="icon" type="image/png" href="/assets/icon.png" />
     <link
       rel="preload"
-      href="./assets/google-sans-flex.woff2"
+      href="/assets/google-sans-flex.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="./src/styles.css" />
+    <link rel="stylesheet" href="/src/styles.css" />
     <script>
       // 在首屏绘制前恢复明暗偏好；存储不可用时继续跟随系统。
       try {
@@ -33,636 +31,1066 @@
         if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
       } catch {}
     </script>
-    <script type="module" src="./src/main.js"></script>
+    <script type="module" src="/src/main.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#main">跳到主要内容</a>
+    <a class="skip-link" href="#main">{{meta.skipLink}}</a>
     <div class="reading-progress" aria-hidden="true"></div>
-    <header class="site-header">
-      <a class="brand" href="#" aria-label="BiliTools 首页">
-        <img src="./assets/icon.png" alt="" width="40" height="40" />
+    <header class="top-app-bar">
+      <a class="brand" href="#" aria-label="{{meta.home}}">
+        <img src="/assets/icon.png" alt="" width="40" height="40" />
         <span>BiliTools</span>
       </a>
-      <nav class="main-nav" aria-label="主要导航">
-        <a class="expressive-button" href="#features">功能</a>
-        <a class="expressive-button" href="#screenshots">界面</a>
-        <a class="expressive-button" href="#download">下载</a>
+      <nav class="nav-pill" aria-label="{{nav.label}}">
+        <a class="expressive-button" href="#features"
+          ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#sparkle"></use></svg
+          ><span>{{nav.features}}</span></a
+        >
+        <a class="expressive-button" href="#screens"
+          ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#window"></use></svg
+          ><span>{{nav.screens}}</span></a
+        >
+        <a class="expressive-button" href="#download"
+          ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#download"></use></svg
+          ><span>{{nav.download}}</span></a
+        >
+        <a class="expressive-button" href="#faq"
+          ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#help"></use></svg
+          ><span>{{nav.faq}}</span></a
+        >
       </nav>
       <div class="header-actions">
+        <a
+          class="language-button expressive-button"
+          href="{{meta.alternateHref}}"
+          hreflang="{{meta.alternateLang}}"
+          lang="{{meta.alternateLang}}"
+          aria-label="{{meta.alternateLabel}}"
+          data-language-switch
+          ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#language"></use></svg
+          ><span>{{meta.alternateName}}</span></a
+        >
         <button
           class="icon-button expressive-button theme-toggle"
           type="button"
-          aria-label="切换为深色模式"
-          title="切换为深色模式"
+          aria-label="{{header.theme}}"
+          title="{{header.theme}}"
           hidden
         >
           <svg class="icon theme-moon" aria-hidden="true">
-            <use href="./assets/icons.svg#moon"></use>
-          </svg>
-          <svg class="icon theme-sun" aria-hidden="true">
-            <use href="./assets/icons.svg#sun"></use>
+            <use href="/assets/icons.svg#moon"></use></svg
+          ><svg class="icon theme-sun" aria-hidden="true">
+            <use href="/assets/icons.svg#sun"></use>
           </svg>
         </button>
         <a
-          class="header-github"
+          class="icon-button expressive-button"
           href="https://github.com/happycola233/BiliTools"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="在 GitHub 查看 BiliTools 源码（新标签页）"
-        >
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#github"></use></svg>
-          <span>GitHub</span>
-          <svg class="icon small" aria-hidden="true">
-            <use href="./assets/icons.svg#external"></use>
-          </svg>
-        </a>
+          aria-label="{{header.github}}"
+          title="GitHub"
+          ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#github"></use></svg
+        ></a>
       </div>
     </header>
 
     <div id="smooth-wrapper">
       <div id="smooth-content">
         <main id="main">
-          <section class="hero section-shell" aria-labelledby="hero-heading">
+          <section class="hero shell" aria-labelledby="hero-heading">
             <div class="hero-copy">
-              <p class="eyebrow"><span class="status-dot"></span> 免费开源 · 为 Android 而生</p>
-              <p class="hero-wordmark" aria-hidden="true">BiliTools</p>
-              <h1 id="hero-heading">
-                把喜欢的<span class="title-punctuation">，</span><br />留在<span
-                  class="title-accent"
-                  >身边<svg viewBox="0 0 220 16" fill="none" aria-hidden="true">
-                    <path d="M5 11C56 1 130 2 215 9" /></svg></span
-                ><span class="title-punctuation">。</span>
-              </h1>
-              <p class="hero-description">
-                喜欢的视频、想听的音乐、值得再读的图文。<br />用 BiliTools
-                保存下来，想看时随时打开。
+              <p class="hero-eyebrow">
+                <span class="status-dot" aria-hidden="true"></span>{{hero.eyebrow}}
               </p>
+              <h1 id="hero-heading">
+                {{hero.titleLead}}<span class="title-accent"
+                  >{{hero.titleAccent}}<svg
+                    viewBox="0 0 220 16"
+                    fill="none"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 11C56 1 130 2 215 9" /></svg></span
+                >{{hero.titleTail}}
+              </h1>
+              <p class="hero-description">{{hero.description}}</p>
               <div class="hero-actions">
-                <a class="button button-primary" href="#download"
+                <a class="button button-filled expressive-button" href="#download"
                   ><svg class="icon" aria-hidden="true">
-                    <use href="./assets/icons.svg#download"></use></svg
-                  >下载 BiliTools</a
+                    <use href="/assets/icons.svg#download"></use></svg
+                  ><span>{{hero.download}}</span></a
                 >
-                <a class="button button-text" href="#screenshots"
-                  >看看应用界面<svg class="icon" aria-hidden="true">
-                    <use href="./assets/icons.svg#arrow"></use></svg
-                ></a>
+                <a
+                  class="button button-tonal expressive-button"
+                  href="https://github.com/happycola233/BiliTools"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#github"></use></svg
+                  ><span>{{hero.source}}</span></a
+                >
               </div>
-              <p class="hero-requirement">Android 10 及以上 <span>·</span> GPL-3.0 开源协议</p>
+              <p class="hero-meta">{{hero.meta}}</p>
             </div>
-            <div
-              class="hero-visual"
-              role="group"
-              aria-label="BiliTools 番剧解析、下载选项和下载管理界面"
-            >
-              <div class="hero-backdrop" aria-hidden="true"></div>
-              <div class="phone hero-phone-options">
+            <div class="hero-visual" role="group" aria-label="{{hero.visualLabel}}">
+              <svg class="hero-shape hero-shape-halo" aria-hidden="true">
+                <use href="/assets/icons.svg#shape-cookie12"></use>
+              </svg>
+              <svg class="hero-shape hero-shape-flower" aria-hidden="true">
+                <use href="/assets/icons.svg#shape-flower"></use>
+              </svg>
+              <svg class="hero-shape hero-shape-clover" aria-hidden="true">
+                <use href="/assets/icons.svg#shape-clover4"></use>
+              </svg>
+              <div class="device hero-device-options">
                 <picture>
                   <source
                     data-theme-source
                     media="(prefers-color-scheme: dark)"
-                    srcset="./assets/screens/options-dark.webp"
+                    srcset="
+                      /assets/screens/{{screens.dir}}/03-download-options-dark-720.webp  720w,
+                      /assets/screens/{{screens.dir}}/03-download-options-dark.jpg      1440w
+                    "
+                    sizes="(min-width: 960px) 220px, 30vw"
                   />
                   <img
-                    src="./assets/screens/options-light.webp"
-                    alt="下载选项中选择画质、音质、字幕和弹幕"
-                    width="720"
-                    height="1600"
-                    fetchpriority="low"
+                    src="/assets/screens/{{screens.dir}}/03-download-options-light-720.webp"
+                    srcset="
+                      /assets/screens/{{screens.dir}}/03-download-options-light-720.webp  720w,
+                      /assets/screens/{{screens.dir}}/03-download-options-light.jpg      1440w
+                    "
+                    sizes="(min-width: 960px) 220px, 30vw"
+                    alt="{{hero.altOptions}}"
+                    width="1440"
+                    height="3200"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </picture>
               </div>
-              <div class="phone hero-phone-series">
+              <div class="device hero-device-downloads">
                 <picture>
                   <source
                     data-theme-source
                     media="(prefers-color-scheme: dark)"
-                    srcset="./assets/screens/series-dark.webp"
+                    srcset="
+                      /assets/screens/{{screens.dir}}/05-downloads-dark-720.webp  720w,
+                      /assets/screens/{{screens.dir}}/05-downloads-dark.jpg      1440w
+                    "
+                    sizes="(min-width: 960px) 220px, 30vw"
                   />
                   <img
-                    src="./assets/screens/series-light.webp"
-                    alt="番剧解析页面，可查看作品信息并批量选择剧集"
-                    width="720"
-                    height="1600"
+                    src="/assets/screens/{{screens.dir}}/05-downloads-light-720.webp"
+                    srcset="
+                      /assets/screens/{{screens.dir}}/05-downloads-light-720.webp  720w,
+                      /assets/screens/{{screens.dir}}/05-downloads-light.jpg      1440w
+                    "
+                    sizes="(min-width: 960px) 220px, 30vw"
+                    alt="{{hero.altDownloads}}"
+                    width="1440"
+                    height="3200"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div class="device hero-device-anime">
+                <picture>
+                  <source
+                    data-theme-source
+                    media="(prefers-color-scheme: dark)"
+                    srcset="
+                      /assets/screens/{{screens.dir}}/02-anime-dark-720.webp  720w,
+                      /assets/screens/{{screens.dir}}/02-anime-dark.jpg      1440w
+                    "
+                    sizes="(min-width: 960px) 220px, 30vw"
+                  />
+                  <img
+                    src="/assets/screens/{{screens.dir}}/02-anime-light-720.webp"
+                    srcset="
+                      /assets/screens/{{screens.dir}}/02-anime-light-720.webp  720w,
+                      /assets/screens/{{screens.dir}}/02-anime-light.jpg      1440w
+                    "
+                    sizes="(min-width: 960px) 220px, 30vw"
+                    alt="{{hero.altAnime}}"
+                    width="1440"
+                    height="3200"
                     fetchpriority="high"
-                  />
-                </picture>
-              </div>
-              <div class="phone hero-phone-download">
-                <picture>
-                  <source
-                    data-theme-source
-                    media="(prefers-color-scheme: dark)"
-                    srcset="./assets/screens/download-dark.webp"
-                  />
-                  <img
-                    src="./assets/screens/download-light.webp"
-                    alt="下载任务按作品分组，显示实时进度并支持暂停和恢复"
-                    width="720"
-                    height="1600"
-                    fetchpriority="low"
                   />
                 </picture>
               </div>
             </div>
             <a class="scroll-cue" href="#features"
-              ><svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#down"></use></svg
-              >往下看看</a
-            >
+              ><span>{{hero.scrollCue}}</span
+              ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#down"></use></svg
+            ></a>
           </section>
 
-          <section
-            id="features"
-            class="story-section section-shell"
-            aria-labelledby="features-heading"
-          >
-            <div class="story-stage">
-              <div class="story-intro">
-                <p class="eyebrow section-eyebrow">从喜欢，到收藏</p>
-                <h2 id="features-heading">三步，收好每一份喜欢。</h2>
-                <p>粘贴链接，选择内容，再下载到手机。</p>
-              </div>
-              <div
-                class="story-tabs connected-button-group"
-                role="tablist"
-                aria-label="了解下载的三个步骤"
-                hidden
-              >
+          <section id="features" class="section shell" aria-labelledby="features-heading">
+            <header class="section-heading reveal">
+              <p class="section-eyebrow">{{features.eyebrow}}</p>
+              <h2 id="features-heading">{{features.title}}</h2>
+              <p>{{features.description}}</p>
+            </header>
+            <div class="content-strip reveal">
+              <p id="content-label">{{content.label}}</p>
+              <ul aria-labelledby="content-label">
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-video"></use></svg
+                  ><span>{{content.video}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#parse"></use></svg
+                  ><span>{{content.anime}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-course"></use></svg
+                  ><span>{{content.course}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-audio"></use></svg
+                  ><span>{{content.audio}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-article"></use></svg
+                  ><span>{{content.article}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-favorites"></use></svg
+                  ><span>{{content.favorites}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-later"></use></svg
+                  ><span>{{content.later}}</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#content-space"></use></svg
+                  ><span>{{content.space}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="bento">
+              <article class="feature-card feature-share tone-periwinkle reveal">
+                <span class="shape-icon" aria-hidden="true"
+                  ><svg class="shape-icon-shape">
+                    <use href="/assets/icons.svg#shape-cookie9"></use></svg
+                  ><svg class="icon"><use href="/assets/icons.svg#share"></use></svg
+                ></span>
+                <h3>{{features.share.title}}</h3>
+                <p>{{features.share.description}}</p>
+                <ul class="token-list" aria-label="{{features.share.idsLabel}}">
+                  <li>BV</li>
+                  <li>av</li>
+                  <li>ep</li>
+                  <li>ss</li>
+                  <li>md</li>
+                  <li>au</li>
+                  <li>am</li>
+                  <li>cv</li>
+                  <li>rl</li>
+                  <li>uid</li>
+                </ul>
+              </article>
+              <article class="feature-card feature-quality tone-sakura reveal">
+                <span class="shape-icon" aria-hidden="true"
+                  ><svg class="shape-icon-shape">
+                    <use href="/assets/icons.svg#shape-cookie6"></use></svg
+                  ><svg class="icon"><use href="/assets/icons.svg#quality"></use></svg
+                ></span>
+                <p class="quality-display" aria-hidden="true">8K<span>Hi-Res</span></p>
+                <h3>{{features.quality.title}}</h3>
+                <p>{{features.quality.description}}</p>
+                <p class="feature-note">{{features.quality.note}}</p>
+              </article>
+              <article class="feature-card tone-sand reveal">
+                <span class="shape-icon" aria-hidden="true"
+                  ><svg class="shape-icon-shape">
+                    <use href="/assets/icons.svg#shape-flower"></use></svg
+                  ><svg class="icon"><use href="/assets/icons.svg#subtitle"></use></svg
+                ></span>
+                <h3>{{features.export.title}}</h3>
+                <p>{{features.export.description}}</p>
+                <ul class="token-list" aria-label="{{features.export.formatsLabel}}">
+                  <li>.mp4</li>
+                  <li>.flac</li>
+                  <li>.srt</li>
+                  <li>.ass</li>
+                  <li>.xml</li>
+                  <li>.md</li>
+                  <li>.nfo</li>
+                </ul>
+              </article>
+              <article class="feature-card tone-seafoam reveal">
+                <span class="shape-icon" aria-hidden="true"
+                  ><svg class="shape-icon-shape">
+                    <use href="/assets/icons.svg#shape-clover4"></use></svg
+                  ><svg class="icon"><use href="/assets/icons.svg#checklist"></use></svg
+                ></span>
+                <h3>{{features.batch.title}}</h3>
+                <p>{{features.batch.description}}</p>
+              </article>
+              <article class="feature-card tone-lilac reveal">
+                <span class="shape-icon" aria-hidden="true"
+                  ><svg class="shape-icon-shape">
+                    <use href="/assets/icons.svg#shape-cookie4"></use></svg
+                  ><svg class="icon"><use href="/assets/icons.svg#language"></use></svg
+                ></span>
+                <h3>{{features.languages.title}}</h3>
+                <p>{{features.languages.description}}</p>
+                <ul class="language-list">
+                  <li lang="zh-Hans">简体中文</li>
+                  <li lang="zh-Hant">繁體中文</li>
+                  <li lang="en">English</li>
+                  <li lang="ja">日本語</li>
+                  <li lang="es">Español</li>
+                  <li lang="pt">Português</li>
+                  <li lang="ar" dir="rtl">العربية</li>
+                  <li lang="ru">Русский</li>
+                  <li lang="tr">Türkçe</li>
+                  <li lang="th">ไทย</li>
+                  <li lang="ms">Bahasa Melayu</li>
+                  <li lang="vi">Tiếng Việt</li>
+                  <li lang="id">Bahasa Indonesia</li>
+                </ul>
+              </article>
+              <article class="feature-card feature-privacy tone-sky reveal">
+                <span class="shape-icon" aria-hidden="true"
+                  ><svg class="shape-icon-shape">
+                    <use href="/assets/icons.svg#shape-cookie9"></use></svg
+                  ><svg class="icon"><use href="/assets/icons.svg#privacy"></use></svg
+                ></span>
+                <div class="feature-privacy-copy">
+                  <h3>{{features.privacy.title}}</h3>
+                  <p>{{features.privacy.description}}</p>
+                </div>
+                <a
+                  class="button button-outlined expressive-button"
+                  href="https://github.com/happycola233/BiliTools"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#code"></use></svg
+                  ><span>{{features.privacy.action}}</span
+                  ><svg class="icon small" aria-hidden="true">
+                    <use href="/assets/icons.svg#external"></use></svg
+                ></a>
+              </article>
+            </div>
+          </section>
+
+          <section id="screens" class="section shell" aria-labelledby="screens-heading">
+            <header class="section-heading reveal">
+              <p class="section-eyebrow">{{screens.eyebrow}}</p>
+              <h2 id="screens-heading">{{screens.title}}</h2>
+              <p>{{screens.description}}</p>
+            </header>
+            <div class="showcase reveal">
+              <div class="showcase-stage">
                 <button
-                  id="story-tab-0"
-                  class="expressive-button"
+                  class="icon-button expressive-button showcase-nav"
+                  type="button"
+                  data-showcase-step="-1"
+                  aria-label="{{screens.previous}}"
+                  hidden
+                >
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#back"></use>
+                  </svg>
+                </button>
+                <div class="showcase-track">
+                  <figure class="showcase-slide" id="screen-slide-0">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.parse.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/01-parse-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/01-parse-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/01-parse-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/01-parse-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/01-parse-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.parse.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.parse.title}}</strong>
+                      <span>{{screens.parse.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-1">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.anime.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/02-anime-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/02-anime-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/02-anime-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/02-anime-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/02-anime-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.anime.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.anime.title}}</strong>
+                      <span>{{screens.anime.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-2">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.options.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/03-download-options-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/03-download-options-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/03-download-options-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/03-download-options-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/03-download-options-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.options.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.options.title}}</strong>
+                      <span>{{screens.options.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-3">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.details.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/04-details-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/04-details-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/04-details-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/04-details-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/04-details-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.details.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.details.title}}</strong>
+                      <span>{{screens.details.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-4">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.downloads.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/05-downloads-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/05-downloads-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/05-downloads-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/05-downloads-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/05-downloads-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.downloads.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.downloads.title}}</strong>
+                      <span>{{screens.downloads.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-5">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.history.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/06-history-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/06-history-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/06-history-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/06-history-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/06-history-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.history.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.history.title}}</strong>
+                      <span>{{screens.history.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-6">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.me.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/07-me-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/07-me-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/07-me-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/07-me-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/07-me-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.me.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.me.title}}</strong>
+                      <span>{{screens.me.description}}</span>
+                    </figcaption>
+                  </figure>
+                  <figure class="showcase-slide" id="screen-slide-7">
+                    <button
+                      class="screen-zoom"
+                      type="button"
+                      aria-label="{{screens.settings.zoom}}"
+                      disabled
+                    >
+                      <picture>
+                        <source
+                          data-theme-source
+                          media="(prefers-color-scheme: dark)"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/08-settings-dark-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/08-settings-dark.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                        />
+                        <img
+                          src="/assets/screens/{{screens.dir}}/08-settings-light-720.webp"
+                          srcset="
+                            /assets/screens/{{screens.dir}}/08-settings-light-720.webp  720w,
+                            /assets/screens/{{screens.dir}}/08-settings-light.jpg      1440w
+                          "
+                          sizes="(min-width: 960px) 270px, 62vw"
+                          alt="{{screens.settings.alt}}"
+                          width="1440"
+                          height="3200"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </picture>
+                    </button>
+                    <figcaption class="showcase-caption">
+                      <strong>{{screens.settings.title}}</strong>
+                      <span>{{screens.settings.description}}</span>
+                    </figcaption>
+                  </figure>
+                </div>
+                <button
+                  class="icon-button expressive-button showcase-nav"
+                  type="button"
+                  data-showcase-step="1"
+                  aria-label="{{screens.next}}"
+                  hidden
+                >
+                  <svg class="icon" aria-hidden="true">
+                    <use href="/assets/icons.svg#arrow"></use>
+                  </svg>
+                </button>
+              </div>
+              <div class="showcase-details" hidden>
+                <p class="showcase-count" aria-hidden="true"></p>
+                <h3 class="showcase-title"></h3>
+                <p class="showcase-description"></p>
+              </div>
+              <div class="showcase-tabs" role="tablist" aria-label="{{screens.tabsLabel}}" hidden>
+                <button
+                  id="screen-tab-0"
+                  class="showcase-chip expressive-button"
                   type="button"
                   role="tab"
-                  aria-controls="story-panel-0"
+                  aria-controls="screen-slide-0"
                   aria-selected="true"
                   tabindex="0"
                 >
-                  <span>01</span>解析链接
+                  {{screens.parse.title}}
                 </button>
                 <button
-                  id="story-tab-1"
-                  class="expressive-button"
+                  id="screen-tab-1"
+                  class="showcase-chip expressive-button"
                   type="button"
                   role="tab"
-                  aria-controls="story-panel-1"
+                  aria-controls="screen-slide-1"
                   aria-selected="false"
                   tabindex="-1"
                 >
-                  <span>02</span>挑选内容
+                  {{screens.anime.title}}
                 </button>
                 <button
-                  id="story-tab-2"
-                  class="expressive-button"
+                  id="screen-tab-2"
+                  class="showcase-chip expressive-button"
                   type="button"
                   role="tab"
-                  aria-controls="story-panel-2"
+                  aria-controls="screen-slide-2"
                   aria-selected="false"
                   tabindex="-1"
                 >
-                  <span>03</span>保存收藏
+                  {{screens.options.title}}
                 </button>
-              </div>
-              <div class="story-panels">
-                <article class="story-chapter" id="story-panel-0" aria-labelledby="parse-heading">
-                  <div class="story-copy">
-                    <p class="story-kicker"><span>01</span> 解析链接</p>
-                    <h3 id="parse-heading">粘贴链接，找到想下载的内容。</h3>
-                    <p class="story-description">
-                      复制视频、番剧、课程、音乐或专栏的链接，粘贴到
-                      BiliTools，即可查看内容并选择要下载的项目。
-                    </p>
-                    <ul class="story-details">
-                      <li>
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#share"></use></svg
-                        >也可通过其他应用的「分享」菜单导入
-                      </li>
-                      <li>
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#check"></use></svg
-                        >支持链接，也支持 AV、BV 等编号
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="story-media">
-                    <figure class="phone story-phone">
-                      <picture
-                        ><source
-                          data-theme-source
-                          media="(prefers-color-scheme: dark)"
-                          srcset="./assets/screens/series-dark.webp" />
-                        <img
-                          src="./assets/screens/series-light.webp"
-                          alt="解析番剧链接后，查看作品信息并勾选剧集"
-                          width="720"
-                          height="1600"
-                          loading="lazy"
-                          decoding="async"
-                      /></picture>
-                    </figure>
-                  </div>
-                </article>
-                <article class="story-chapter" id="story-panel-1" aria-labelledby="choose-heading">
-                  <div class="story-copy">
-                    <p class="story-kicker"><span>02</span> 挑选内容</p>
-                    <h3 id="choose-heading">画质、音质，按你喜欢。</h3>
-                    <p class="story-description">
-                      想看得更清楚，还是只想听声音？按需选择画质、音质和格式，再把字幕、弹幕与封面一起收好。
-                    </p>
-                    <ul class="story-details">
-                      <li>
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#quality"></use></svg
-                        >最高 8K 画质，支持 Hi-Res 音频
-                      </li>
-                      <li>
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#subtitle"></use></svg
-                        >字幕、弹幕、AI 总结与元数据按需导出
-                      </li>
-                    </ul>
-                    <p class="story-note">可用音画质取决于内容本身及你的账号权限。</p>
-                  </div>
-                  <div class="story-media">
-                    <figure class="phone story-phone">
-                      <picture
-                        ><source
-                          data-theme-source
-                          media="(prefers-color-scheme: dark)"
-                          srcset="./assets/screens/options-dark.webp" />
-                        <img
-                          src="./assets/screens/options-light.webp"
-                          alt="下载选项中可选择音画质、字幕、弹幕和其他附加内容"
-                          width="720"
-                          height="1600"
-                          loading="lazy"
-                          decoding="async"
-                      /></picture>
-                    </figure>
-                  </div>
-                </article>
-                <article class="story-chapter" id="story-panel-2" aria-labelledby="save-heading">
-                  <div class="story-copy">
-                    <p class="story-kicker"><span>03</span> 保存收藏</p>
-                    <h3 id="save-heading">下载好了，慢慢看。</h3>
-                    <p class="story-description">
-                      番剧、合集、歌单和收藏夹，勾选后就能批量下载。进度随时可看，文件也会按你设定的方式整理好。
-                    </p>
-                    <ul class="story-details">
-                      <li>
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#download"></use></svg
-                        >暂停、继续，下载节奏由你掌握
-                      </li>
-                      <li>
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#folder"></use></svg
-                        >自定义命名和目录，找起来更方便
-                      </li>
-                    </ul>
-                  </div>
-                  <div class="story-media">
-                    <figure class="phone story-phone">
-                      <picture
-                        ><source
-                          data-theme-source
-                          media="(prefers-color-scheme: dark)"
-                          srcset="./assets/screens/download-dark.webp" />
-                        <img
-                          src="./assets/screens/download-light.webp"
-                          alt="按作品分组查看下载进度，暂停或继续任务"
-                          width="720"
-                          height="1600"
-                          loading="lazy"
-                          decoding="async"
-                      /></picture>
-                    </figure>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <div class="detail-strip">
-              <div>
-                <span class="detail-value">8K <span>+ Hi-Res</span></span>
-                <h3>画面与声音，都值得好好保存。</h3>
-              </div>
-              <div>
-                <p>也照顾每一个小细节。</p>
-                <p class="detail-description">
-                  字幕导出为 SRT，弹幕保存为 ASS 或 XML。专栏图文、AI 总结和 NFO
-                  元数据，让收藏更完整。
-                </p>
-                <p class="file-types">
-                  .srt <span>·</span> .ass <span>·</span> .md <span>·</span> .nfo
-                </p>
+                <button
+                  id="screen-tab-3"
+                  class="showcase-chip expressive-button"
+                  type="button"
+                  role="tab"
+                  aria-controls="screen-slide-3"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  {{screens.details.title}}
+                </button>
+                <button
+                  id="screen-tab-4"
+                  class="showcase-chip expressive-button"
+                  type="button"
+                  role="tab"
+                  aria-controls="screen-slide-4"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  {{screens.downloads.title}}
+                </button>
+                <button
+                  id="screen-tab-5"
+                  class="showcase-chip expressive-button"
+                  type="button"
+                  role="tab"
+                  aria-controls="screen-slide-5"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  {{screens.history.title}}
+                </button>
+                <button
+                  id="screen-tab-6"
+                  class="showcase-chip expressive-button"
+                  type="button"
+                  role="tab"
+                  aria-controls="screen-slide-6"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  {{screens.me.title}}
+                </button>
+                <button
+                  id="screen-tab-7"
+                  class="showcase-chip expressive-button"
+                  type="button"
+                  role="tab"
+                  aria-controls="screen-slide-7"
+                  aria-selected="false"
+                  tabindex="-1"
+                >
+                  {{screens.settings.title}}
+                </button>
               </div>
             </div>
           </section>
 
-          <section
-            id="screenshots"
-            class="screenshots-section"
-            aria-labelledby="screenshots-heading"
-          >
-            <div class="section-shell section-heading reveal">
-              <div>
-                <p class="eyebrow section-eyebrow">先看看，用起来是什么样</p>
-                <h2 id="screenshots-heading">熟悉的操作，顺手的体验。</h2>
-              </div>
-              <div class="gallery-heading-actions">
-                <p>解析、下载、收藏，各有各的位置。</p>
-                <div class="gallery-controls" hidden>
-                  <button
-                    class="icon-button expressive-button"
-                    type="button"
-                    data-gallery-direction="-1"
-                    aria-label="向前浏览应用截图"
-                    aria-controls="screenshot-gallery"
-                  >
-                    <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#back"></use>
-                    </svg></button
-                  ><button
-                    class="icon-button expressive-button"
-                    type="button"
-                    data-gallery-direction="1"
-                    aria-label="向后浏览应用截图"
-                    aria-controls="screenshot-gallery"
-                  >
-                    <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#arrow"></use>
-                    </svg>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <section
-              id="screenshot-gallery"
-              class="screenshot-gallery"
-              aria-label="应用界面截图，可横向滚动浏览"
-              tabindex="0"
-            >
-              <figure class="screenshot-card">
-                <a
-                  class="screenshot-link phone"
-                  href="./assets/screens/series-light.webp"
-                  data-screen="series"
-                  aria-label="放大查看番剧解析与选集界面"
-                  ><picture
-                    ><source
-                      data-theme-source
-                      media="(prefers-color-scheme: dark)"
-                      srcset="./assets/screens/series-dark.webp" />
-                    <img
-                      src="./assets/screens/series-light.webp"
-                      alt="番剧解析与选集界面"
-                      width="720"
-                      height="1600"
-                      loading="lazy"
-                      decoding="async" /></picture
-                ></a>
-                <figcaption>
-                  <span>01</span>
-                  <div>
-                    <h3>解析与选集</h3>
-                    <p>查看作品，批量勾选剧集</p>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="screenshot-card">
-                <a
-                  class="screenshot-link phone"
-                  href="./assets/screens/options-light.webp"
-                  data-screen="options"
-                  aria-label="放大查看下载与导出选项界面"
-                  ><picture
-                    ><source
-                      data-theme-source
-                      media="(prefers-color-scheme: dark)"
-                      srcset="./assets/screens/options-dark.webp" />
-                    <img
-                      src="./assets/screens/options-light.webp"
-                      alt="下载与导出选项界面"
-                      width="720"
-                      height="1600"
-                      loading="lazy"
-                      decoding="async" /></picture
-                ></a>
-                <figcaption>
-                  <span>02</span>
-                  <div>
-                    <h3>下载与导出</h3>
-                    <p>选择音画质与附加内容</p>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="screenshot-card">
-                <a
-                  class="screenshot-link phone"
-                  href="./assets/screens/download-light.webp"
-                  data-screen="download"
-                  aria-label="放大查看下载任务界面"
-                  ><picture
-                    ><source
-                      data-theme-source
-                      media="(prefers-color-scheme: dark)"
-                      srcset="./assets/screens/download-dark.webp" />
-                    <img
-                      src="./assets/screens/download-light.webp"
-                      alt="按作品分组的下载任务界面"
-                      width="720"
-                      height="1600"
-                      loading="lazy"
-                      decoding="async" /></picture
-                ></a>
-                <figcaption>
-                  <span>03</span>
-                  <div>
-                    <h3>下载管理</h3>
-                    <p>查看进度，随时暂停继续</p>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="screenshot-card">
-                <a
-                  class="screenshot-link phone"
-                  href="./assets/screens/history-light.webp"
-                  data-screen="history"
-                  aria-label="放大查看历史记录界面"
-                  ><picture
-                    ><source
-                      data-theme-source
-                      media="(prefers-color-scheme: dark)"
-                      srcset="./assets/screens/history-dark.webp" />
-                    <img
-                      src="./assets/screens/history-light.webp"
-                      alt="可搜索和筛选的历史记录界面"
-                      width="720"
-                      height="1600"
-                      loading="lazy"
-                      decoding="async" /></picture
-                ></a>
-                <figcaption>
-                  <span>04</span>
-                  <div>
-                    <h3>历史记录</h3>
-                    <p>搜索、筛选看过的内容</p>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="screenshot-card">
-                <a
-                  class="screenshot-link phone"
-                  href="./assets/screens/profile-light.webp"
-                  data-screen="profile"
-                  aria-label="放大查看个人中心界面"
-                  ><picture
-                    ><source
-                      data-theme-source
-                      media="(prefers-color-scheme: dark)"
-                      srcset="./assets/screens/profile-dark.webp" />
-                    <img
-                      src="./assets/screens/profile-light.webp"
-                      alt="个人中心、我的收藏与稍后再看入口"
-                      width="720"
-                      height="1600"
-                      loading="lazy"
-                      decoding="async" /></picture
-                ></a>
-                <figcaption>
-                  <span>05</span>
-                  <div>
-                    <h3>我的收藏</h3>
-                    <p>收藏夹与稍后再看</p>
-                  </div>
-                </figcaption>
-              </figure>
-              <figure class="screenshot-card">
-                <a
-                  class="screenshot-link phone"
-                  href="./assets/screens/appearance-light.webp"
-                  data-screen="appearance"
-                  aria-label="放大查看外观设置界面"
-                  ><picture
-                    ><source
-                      data-theme-source
-                      media="(prefers-color-scheme: dark)"
-                      srcset="./assets/screens/appearance-dark.webp" />
-                    <img
-                      src="./assets/screens/appearance-light.webp"
-                      alt="明暗模式、十三套配色与液态玻璃外观设置"
-                      width="720"
-                      height="1600"
-                      loading="lazy"
-                      decoding="async" /></picture
-                ></a>
-                <figcaption>
-                  <span>06</span>
-                  <div>
-                    <h3>随心设置</h3>
-                    <p>主题、配色，随心调整</p>
-                  </div>
-                </figcaption>
-              </figure>
-            </section>
-            <p class="gallery-hint section-shell">点击截图查看大图，使用箭头浏览更多界面。</p>
-          </section>
-
-          <section class="appearance-section section-shell" aria-labelledby="appearance-heading">
-            <div class="appearance-panel reveal">
+          <section class="section shell" aria-labelledby="appearance-heading">
+            <div class="appearance-card reveal">
               <div class="appearance-copy">
-                <p class="eyebrow section-eyebrow">一点个性，很多舒心</p>
-                <h2 id="appearance-heading">好看，<br />也可以很像你。</h2>
-                <p>
-                  十三套原创配色，挑一款喜欢的。白天清爽，夜晚柔和，也可以跟随系统壁纸取色。圆润的控件与通透的液态玻璃，让每次打开都很舒服。
+                <p class="section-eyebrow">{{appearance.eyebrow}}</p>
+                <h2 id="appearance-heading">{{appearance.title}}</h2>
+                <p>{{appearance.description}}</p>
+                <p class="appearance-label">
+                  <svg class="icon small" aria-hidden="true">
+                    <use href="/assets/icons.svg#palette"></use></svg
+                  >{{appearance.label}}
                 </p>
-                <span class="appearance-label">13 种配色 · 明暗皆宜</span>
               </div>
-              <div class="palette-composition" role="group" aria-label="App 内置的十三套原创配色">
+              <div class="palette-composition">
                 <div
                   id="palette-preview"
                   class="palette-preview"
                   role="region"
-                  aria-label="配色效果预览"
+                  aria-label="{{appearance.region}}"
                 >
                   <div class="palette-preview-heading">
-                    <span class="palette-preview-title">下载与导出</span>
-                    <span class="palette-preview-name" role="status">蓝紫 · 日间</span>
-                  </div>
-                  <div class="palette-preview-content">
-                    <p id="palette-output-label" class="palette-preview-label">输出类型</p>
-                    <div
-                      class="palette-preview-segments connected-button-group"
-                      role="radiogroup"
-                      aria-labelledby="palette-output-label"
+                    <span class="palette-preview-title">{{appearance.previewTitle}}</span>
+                    <span class="palette-preview-name" role="status"
+                      >{{appearance.previewName}}</span
                     >
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked="true"
-                        data-preview-output="audiovisual"
-                        class="expressive-button"
-                        tabindex="0"
-                      >
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#output-audiovisual"></use>
-                        </svg>
-                        <span>音视频</span>
-                      </button>
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked="false"
-                        data-preview-output="video"
-                        class="expressive-button"
-                        tabindex="-1"
-                      >
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#output-video"></use>
-                        </svg>
-                        <span>仅视频</span>
-                      </button>
-                      <button
-                        type="button"
-                        role="radio"
-                        aria-checked="false"
-                        data-preview-output="audio"
-                        class="expressive-button"
-                        tabindex="-1"
-                      >
-                        <svg class="icon" aria-hidden="true">
-                          <use href="./assets/icons.svg#output-audio"></use>
-                        </svg>
-                        <span>仅音频</span>
-                      </button>
-                    </div>
+                  </div>
+                  <p id="palette-output-label" class="palette-preview-label">
+                    {{appearance.outputLabel}}
+                  </p>
+                  <div
+                    class="palette-preview-segments connected-button-group"
+                    role="radiogroup"
+                    aria-labelledby="palette-output-label"
+                  >
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked="true"
+                      data-preview-output="audiovisual"
+                      class="expressive-button"
+                      tabindex="0"
+                    >
+                      <svg class="icon" aria-hidden="true">
+                        <use href="/assets/icons.svg#output-audiovisual"></use></svg
+                      ><span>{{appearance.outputAudiovisual}}</span>
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked="false"
+                      data-preview-output="video"
+                      class="expressive-button"
+                      tabindex="-1"
+                    >
+                      <svg class="icon" aria-hidden="true">
+                        <use href="/assets/icons.svg#output-video"></use></svg
+                      ><span>{{appearance.outputVideo}}</span>
+                    </button>
+                    <button
+                      type="button"
+                      role="radio"
+                      aria-checked="false"
+                      data-preview-output="audio"
+                      class="expressive-button"
+                      tabindex="-1"
+                    >
+                      <svg class="icon" aria-hidden="true">
+                        <use href="/assets/icons.svg#output-audio"></use></svg
+                      ><span>{{appearance.outputAudio}}</span>
+                    </button>
                   </div>
                   <div class="palette-preview-actions">
-                    <span class="palette-preview-quality">1080P · DASH</span>
+                    <span class="palette-preview-quality">{{appearance.quality}}</span>
                     <button type="button" class="palette-preview-download expressive-button">
-                      <svg class="icon small" aria-hidden="true">
-                        <use href="./assets/icons.svg#download"></use>
+                      <svg class="icon small" data-celebration-icon="idle" aria-hidden="true">
+                        <use href="/assets/icons.svg#download"></use>
                       </svg>
-                      <span>下载</span>
+                      <svg
+                        class="icon small"
+                        data-celebration-icon="done"
+                        aria-hidden="true"
+                        hidden
+                      >
+                        <use href="/assets/icons.svg#check"></use>
+                      </svg>
+                      <span>{{appearance.download}}</span>
                     </button>
                   </div>
                 </div>
-                <ul class="palette-list" aria-label="选择配色">
-                  <li><button type="button" data-palette="periwinkle">蓝紫</button></li>
-                  <li><button type="button" data-palette="iris">鸢尾</button></li>
-                  <li><button type="button" data-palette="sky">天蓝</button></li>
-                  <li><button type="button" data-palette="lagoon">湖蓝</button></li>
-                  <li><button type="button" data-palette="seafoam">薄荷</button></li>
-                  <li><button type="button" data-palette="mint">青苹</button></li>
-                  <li><button type="button" data-palette="matcha">抹茶</button></li>
-                  <li><button type="button" data-palette="sand">沙金</button></li>
-                  <li><button type="button" data-palette="apricot">蜜杏</button></li>
-                  <li><button type="button" data-palette="coral">珊瑚</button></li>
-                  <li><button type="button" data-palette="sakura">樱粉</button></li>
-                  <li><button type="button" data-palette="orchid">藕荷</button></li>
-                  <li><button type="button" data-palette="lilac">丁香</button></li>
+                <ul class="palette-list" aria-label="{{appearance.palettesLabel}}">
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="periwinkle"
+                      aria-pressed="true"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.periwinkle}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="iris"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.iris}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="sky"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.sky}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="lagoon"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.lagoon}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="seafoam"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.seafoam}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="mint"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.mint}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="matcha"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.matcha}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="sand"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.sand}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="apricot"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.apricot}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="coral"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.coral}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="sakura"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.sakura}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="orchid"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.orchid}}</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="palette-swatch-button expressive-button"
+                      data-palette="lilac"
+                      aria-pressed="false"
+                      aria-controls="palette-preview"
+                    >
+                      <span class="palette-swatch" data-ripple-surface aria-hidden="true"
+                        ><svg class="icon palette-check" aria-hidden="true">
+                          <use href="/assets/icons.svg#check"></use></svg></span
+                      ><span class="palette-name">{{appearance.palettes.lilac}}</span>
+                    </button>
+                  </li>
                 </ul>
-                <div class="appearance-modes" role="group" aria-label="预览明暗模式">
+                <div
+                  class="appearance-modes connected-button-group"
+                  role="group"
+                  aria-label="{{appearance.modesLabel}}"
+                >
                   <button
                     type="button"
                     class="expressive-button"
@@ -670,9 +1098,8 @@
                     aria-pressed="true"
                   >
                     <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#sun"></use>
-                    </svg>
-                    日间清新
+                      <use href="/assets/icons.svg#sun"></use></svg
+                    ><span>{{appearance.light}}</span>
                   </button>
                   <button
                     type="button"
@@ -681,26 +1108,26 @@
                     aria-pressed="false"
                   >
                     <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#moon"></use>
-                    </svg>
-                    夜间舒适
+                      <use href="/assets/icons.svg#moon"></use></svg
+                    ><span>{{appearance.dark}}</span>
                   </button>
                 </div>
-                <p class="palette-hint" role="status">选个颜色，看看效果</p>
+                <p class="palette-hint" role="status">{{appearance.hint}}</p>
               </div>
             </div>
           </section>
 
-          <section
-            id="download"
-            class="download-section section-shell"
-            aria-labelledby="download-heading"
-          >
-            <div class="download-panel">
-              <div class="download-main">
-                <button class="download-mascot" type="button" aria-label="让小电视跳一下" disabled>
+          <section id="download" class="section shell" aria-labelledby="download-heading">
+            <div class="download-grid">
+              <div class="download-card reveal">
+                <button
+                  class="download-mascot"
+                  type="button"
+                  aria-label="{{download.mascot}}"
+                  disabled
+                >
                   <img
-                    src="./assets/icon.png"
+                    src="/assets/icon.png"
                     alt=""
                     width="76"
                     height="76"
@@ -708,35 +1135,31 @@
                     draggable="false"
                   />
                 </button>
-                <p class="eyebrow">你的下一份收藏，从这里开始</p>
-                <h2 id="download-heading">精彩不止在线。<br />现在，带走喜欢。</h2>
-                <p>下载 BiliTools，把想看的内容存到手机里。</p>
-                <div class="release-info">
-                  <span class="release-version"
-                    ><span data-release-label>已发布版本</span>
-                    <strong data-release-version>v3.0</strong></span
+                <p class="section-eyebrow">{{download.eyebrow}}</p>
+                <h2 id="download-heading">{{download.title}}</h2>
+                <p class="download-description">{{download.description}}</p>
+                <p class="release-info">
+                  <span class="release-chip"
+                    ><span data-release-label>{{download.releaseLabel}}</span>
+                    <strong data-release-version>{{release.version}}</strong></span
                   >
                   <span class="release-date"
-                    ><time data-release-date datetime="2026-09-07T04:53:50Z">2026年9月7日</time>
-                    发布</span
+                    >{{download.releasedPrefix}}
+                    <time data-release-date datetime="{{release.publishedAt}}"
+                      >{{release.date}}</time
+                    ></span
                   >
-                </div>
+                </p>
                 <div class="download-actions">
-                  <div class="split-button" role="group" aria-label="下载 BiliTools">
+                  <div class="split-button" role="group" aria-label="{{download.groupLabel}}">
                     <a
                       class="split-button-primary expressive-button"
                       data-download-link
-                      href="https://files.happycola.top/BiliTools/BiliTools-v3.0-arm64-v8a.apk"
+                      href="{{release.downloadUrl}}"
                       ><svg class="icon" aria-hidden="true">
-                        <use href="./assets/icons.svg#download"></use>
-                      </svg>
-                      <span class="split-button-copy">
-                        <span class="split-button-title">加速下载</span>
-                        <span class="split-button-detail" data-package-summary aria-live="polite"
-                          >arm64-v8a · 67.5 MiB</span
-                        >
-                      </span>
-                    </a>
+                        <use href="/assets/icons.svg#download"></use></svg
+                      ><span>{{download.primary}}</span></a
+                    >
                     <button
                       class="split-button-toggle expressive-button"
                       type="button"
@@ -744,8 +1167,8 @@
                       aria-haspopup="menu"
                       aria-controls="package-menu"
                       aria-expanded="false"
-                      aria-label="选择安装包"
-                      title="选择安装包"
+                      aria-label="{{download.chooseLabel}}"
+                      title="{{download.chooseLabel}}"
                       hidden
                     >
                       <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -760,129 +1183,234 @@
                       </svg>
                     </button>
                   </div>
-                  <p class="package-hint">
-                    主流手机推荐 arm64-v8a，不确定时可选 universal 通用包。
+                  <p class="package-summary">
+                    <span>{{download.packageLabel}}</span>
+                    <strong data-package-summary aria-live="polite">{{release.summary}}</strong>
                   </p>
+                  <p class="package-hint">{{download.packageHint}}</p>
                 </div>
                 <div class="release-status">
                   <p data-release-status role="status"></p>
-                  <button type="button" data-release-retry hidden>重新检查</button>
+                  <button
+                    type="button"
+                    class="button button-text expressive-button"
+                    data-release-retry
+                    hidden
+                  >
+                    {{download.retry}}
+                  </button>
                 </div>
                 <noscript
                   ><p class="download-meta">
-                    当前提供 v3.0 的 arm64-v8a 安装包。选择其他安装包或查看新版，请前往<a
-                      href="https://github.com/happycola233/BiliTools/releases/latest"
-                      >GitHub 发行版</a
-                    >。
+                    {{download.noscriptLead}} {{release.version}} {{download.noscriptTail}}
+                    <a href="https://github.com/happycola233/BiliTools/releases/latest"
+                      >{{download.noscriptLink}}</a
+                    >{{download.noscriptEnd}}
                   </p></noscript
                 >
               </div>
-              <div class="install-guide">
-                <h3>开始之前</h3>
-                <ul class="install-checklist">
+              <div class="install-card reveal">
+                <h3>{{download.guideTitle}}</h3>
+                <ul class="install-list">
                   <li>
-                    <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#check"></use>
-                    </svg>
+                    <span class="list-icon" aria-hidden="true"
+                      ><svg class="icon"><use href="/assets/icons.svg#check"></use></svg
+                    ></span>
                     <div>
-                      <h4>Android 10 及以上</h4>
-                      <p>手机与平板均可安装。</p>
+                      <h4>{{download.requirementTitle}}</h4>
+                      <p>{{download.requirementText}}</p>
                     </div>
                   </li>
                   <li>
-                    <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#check"></use>
-                    </svg>
+                    <span class="list-icon" aria-hidden="true"
+                      ><svg class="icon"><use href="/assets/icons.svg#checklist"></use></svg
+                    ></span>
                     <div>
-                      <h4>功能相同，适配不同设备</h4>
-                      <p>
-                        各安装包的功能一致，区别在于处理器架构和文件大小。通用包包含全部四种架构，需要更多下载流量。
-                      </p>
+                      <h4>{{download.packagesTitle}}</h4>
+                      <p>{{download.packagesText}}</p>
                     </div>
                   </li>
                   <li>
-                    <svg class="icon" aria-hidden="true">
-                      <use href="./assets/icons.svg#check"></use>
-                    </svg>
+                    <span class="list-icon" aria-hidden="true"
+                      ><svg class="icon"><use href="/assets/icons.svg#update"></use></svg
+                    ></span>
                     <div>
-                      <h4>后续更新，在应用内完成</h4>
-                      <p>打开「设置 → 关于 → 检查更新」，<br />自动匹配适合设备的安装包。</p>
+                      <h4>{{download.updateTitle}}</h4>
+                      <p>{{download.updateText}}</p>
                     </div>
                   </li>
                 </ul>
                 <div class="install-links">
                   <a
+                    class="chip-link expressive-button"
                     data-release-notes
-                    href="https://github.com/happycola233/BiliTools/releases/tag/v3.0"
+                    href="{{release.url}}"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >更新记录<svg class="icon small" aria-hidden="true">
-                      <use href="./assets/icons.svg#external"></use></svg></a
-                  ><a
-                    href="https://github.com/happycola233/BiliTools"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    >项目仓库<svg class="icon small" aria-hidden="true">
-                      <use href="./assets/icons.svg#external"></use></svg></a
-                  ><a
+                    >{{download.releaseNotes}}<svg class="icon small" aria-hidden="true">
+                      <use href="/assets/icons.svg#external"></use></svg
+                  ></a>
+                  <a
+                    class="chip-link expressive-button"
                     href="https://github.com/happycola233/BiliTools/releases"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >历史版本<svg class="icon small" aria-hidden="true">
-                      <use href="./assets/icons.svg#external"></use></svg></a
-                  ><a
-                    href="https://github.com/happycola233/BiliTools#-安装"
+                    >{{download.allReleases}}<svg class="icon small" aria-hidden="true">
+                      <use href="/assets/icons.svg#external"></use></svg
+                  ></a>
+                  <a
+                    class="chip-link expressive-button"
+                    href="https://github.com/happycola233/BiliTools"
                     target="_blank"
                     rel="noopener noreferrer"
-                    >安装说明<svg class="icon small" aria-hidden="true">
-                      <use href="./assets/icons.svg#external"></use></svg
+                    >{{download.repository}}<svg class="icon small" aria-hidden="true">
+                      <use href="/assets/icons.svg#external"></use></svg
+                  ></a>
+                  <a
+                    class="chip-link expressive-button"
+                    href="{{download.installGuideUrl}}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{download.installGuide}}<svg class="icon small" aria-hidden="true">
+                      <use href="/assets/icons.svg#external"></use></svg
                   ></a>
                 </div>
               </div>
             </div>
           </section>
+
+          <section id="faq" class="section shell" aria-labelledby="faq-heading">
+            <div class="faq-layout">
+              <header class="section-heading faq-heading reveal">
+                <p class="section-eyebrow">{{faq.eyebrow}}</p>
+                <h2 id="faq-heading">{{faq.title}}</h2>
+                <p>
+                  {{faq.description}}
+                  <a
+                    href="https://github.com/happycola233/BiliTools/issues"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >{{faq.feedback}}</a
+                  >
+                </p>
+              </header>
+              <div class="faq-list reveal">
+                <details class="faq-item" data-ripple-surface open>
+                  <summary data-ripple>
+                    <span>{{faq.login.question}}</span
+                    ><svg class="icon faq-chevron" aria-hidden="true">
+                      <use href="/assets/icons.svg#down"></use>
+                    </svg>
+                  </summary>
+                  <div class="faq-answer"><p>{{faq.login.answer}}</p></div>
+                </details>
+                <details class="faq-item" data-ripple-surface>
+                  <summary data-ripple>
+                    <span>{{faq.package.question}}</span
+                    ><svg class="icon faq-chevron" aria-hidden="true">
+                      <use href="/assets/icons.svg#down"></use>
+                    </svg>
+                  </summary>
+                  <div class="faq-answer"><p>{{faq.package.answer}}</p></div>
+                </details>
+                <details class="faq-item" data-ripple-surface>
+                  <summary data-ripple>
+                    <span>{{faq.location.question}}</span
+                    ><svg class="icon faq-chevron" aria-hidden="true">
+                      <use href="/assets/icons.svg#down"></use>
+                    </svg>
+                  </summary>
+                  <div class="faq-answer"><p>{{faq.location.answer}}</p></div>
+                </details>
+                <details class="faq-item" data-ripple-surface>
+                  <summary data-ripple>
+                    <span>{{faq.quality.question}}</span
+                    ><svg class="icon faq-chevron" aria-hidden="true">
+                      <use href="/assets/icons.svg#down"></use>
+                    </svg>
+                  </summary>
+                  <div class="faq-answer"><p>{{faq.quality.answer}}</p></div>
+                </details>
+                <details class="faq-item" data-ripple-surface>
+                  <summary data-ripple>
+                    <span>{{faq.update.question}}</span
+                    ><svg class="icon faq-chevron" aria-hidden="true">
+                      <use href="/assets/icons.svg#down"></use>
+                    </svg>
+                  </summary>
+                  <div class="faq-answer"><p>{{faq.update.answer}}</p></div>
+                </details>
+                <details class="faq-item" data-ripple-surface>
+                  <summary data-ripple>
+                    <span>{{faq.privacy.question}}</span
+                    ><svg class="icon faq-chevron" aria-hidden="true">
+                      <use href="/assets/icons.svg#down"></use>
+                    </svg>
+                  </summary>
+                  <div class="faq-answer"><p>{{faq.privacy.answer}}</p></div>
+                </details>
+              </div>
+            </div>
+          </section>
         </main>
 
-        <footer class="site-footer section-shell">
-          <div class="footer-top">
-            <a class="brand" href="#" aria-label="BiliTools 首页"
-              ><img src="./assets/icon.png" alt="" width="40" height="40" /><span
-                >BiliTools</span
-              ></a
-            >
-            <p>一个免费开源的哔哩哔哩下载工具。</p>
-            <nav class="footer-links" aria-label="项目链接">
+        <footer class="site-footer shell">
+          <div class="footer-main">
+            <div class="footer-brand">
+              <a class="brand" href="#" aria-label="{{meta.home}}"
+                ><img src="/assets/icon.png" alt="" width="40" height="40" /><span
+                  >BiliTools</span
+                ></a
+              >
+              <p>{{footer.tagline}}</p>
+            </div>
+            <nav class="footer-links" aria-labelledby="footer-product">
+              <h2 id="footer-product">{{footer.productTitle}}</h2>
+              <a href="#features">{{nav.features}}</a>
+              <a href="#screens">{{nav.screens}}</a>
+              <a href="#download">{{nav.download}}</a>
+              <a href="#faq">{{nav.faq}}</a>
+            </nav>
+            <nav class="footer-links" aria-labelledby="footer-project">
+              <h2 id="footer-project">{{footer.projectTitle}}</h2>
               <a
                 href="https://github.com/happycola233/BiliTools"
                 target="_blank"
                 rel="noopener noreferrer"
-                >源码</a
+                >{{footer.source}}</a
+              >
+              <a
+                href="https://github.com/happycola233/BiliTools/releases"
+                target="_blank"
+                rel="noopener noreferrer"
+                >{{footer.changelog}}</a
               >
               <a
                 href="https://github.com/happycola233/BiliTools/issues"
                 target="_blank"
                 rel="noopener noreferrer"
-                >问题反馈</a
+                >{{footer.issues}}</a
               >
               <a
                 href="https://github.com/happycola233/BiliTools/blob/main/LICENSE"
                 target="_blank"
                 rel="noopener noreferrer"
-                >GPL-3.0</a
+                >{{footer.license}}</a
               >
             </nav>
           </div>
           <div class="footer-bottom">
-            <p>© 2026 BiliTools contributors</p>
-            <p>本项目与哔哩哔哩及其关联公司无关联、合作或背书关系。</p>
+            <p>{{footer.copyright}}</p>
+            <p>{{footer.disclaimer}}</p>
           </div>
         </footer>
       </div>
     </div>
+
     <div id="package-menu" class="package-menu" popover="auto">
       <div class="package-menu-header">
-        <h2 id="package-menu-heading">选择安装包</h2>
-        <p id="package-menu-hint">功能相同，选择适合设备的版本。</p>
+        <h2 id="package-menu-heading">{{packages.title}}</h2>
+        <p id="package-menu-hint">{{packages.hint}}</p>
       </div>
       <div
         class="package-options"
@@ -899,11 +1427,12 @@
           tabindex="-1"
         >
           <span class="package-check" aria-hidden="true"
-            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+            ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg
           ></span>
           <span class="package-choice"
-            ><span class="package-name">arm64-v8a <span class="package-badge">推荐</span></span
-            ><span class="package-description">64 位 ARM · 主流手机与平板</span></span
+            ><span class="package-name"
+              >arm64-v8a <span class="package-badge">{{packages.recommended}}</span></span
+            ><span class="package-description">{{packages.arm64}}</span></span
           >
           <span class="package-size" data-package-size></span>
         </button>
@@ -916,11 +1445,11 @@
           tabindex="-1"
         >
           <span class="package-check" aria-hidden="true"
-            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+            ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg
           ></span>
           <span class="package-choice"
             ><span class="package-name">armeabi-v7a</span
-            ><span class="package-description">32 位 ARM · 较早的设备</span></span
+            ><span class="package-description">{{packages.armv7}}</span></span
           >
           <span class="package-size" data-package-size></span>
         </button>
@@ -933,11 +1462,11 @@
           tabindex="-1"
         >
           <span class="package-check" aria-hidden="true"
-            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+            ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg
           ></span>
           <span class="package-choice"
             ><span class="package-name">universal</span
-            ><span class="package-description">通用包 · 包含四种架构，体积较大</span></span
+            ><span class="package-description">{{packages.universal}}</span></span
           >
           <span class="package-size" data-package-size></span>
         </button>
@@ -950,11 +1479,11 @@
           tabindex="-1"
         >
           <span class="package-check" aria-hidden="true"
-            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+            ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg
           ></span>
           <span class="package-choice"
             ><span class="package-name">x86</span
-            ><span class="package-description">32 位 x86 · 部分模拟器与设备</span></span
+            ><span class="package-description">{{packages.x86}}</span></span
           >
           <span class="package-size" data-package-size></span>
         </button>
@@ -967,62 +1496,64 @@
           tabindex="-1"
         >
           <span class="package-check" aria-hidden="true"
-            ><svg class="icon"><use href="./assets/icons.svg#check"></use></svg
+            ><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#check"></use></svg
           ></span>
           <span class="package-choice"
             ><span class="package-name">x86_64</span
-            ><span class="package-description">64 位 x86 · 部分模拟器与设备</span></span
+            ><span class="package-description">{{packages.x86_64}}</span></span
           >
           <span class="package-size" data-package-size></span>
         </button>
       </div>
-      <p class="package-menu-footer">不确定设备架构？选择 universal 通用包。</p>
+      <p class="package-menu-footer">{{packages.footer}}</p>
     </div>
+
     <dialog class="screenshot-dialog" aria-labelledby="dialog-title">
       <div class="dialog-toolbar">
-        <h2 id="dialog-title">应用界面</h2>
+        <h2 id="dialog-title">{{dialog.title}}</h2>
         <form method="dialog">
-          <button type="submit" class="icon-button expressive-button" aria-label="关闭截图">
-            <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#close"></use></svg>
+          <button type="submit" class="icon-button expressive-button" aria-label="{{dialog.close}}">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#close"></use></svg>
           </button>
         </form>
       </div>
       <div class="dialog-viewport">
-        <img
-          class="dialog-image"
-          src="./assets/screens/series-light.webp"
-          alt=""
-          width="720"
-          height="1600"
-        />
-        <img
-          class="dialog-image"
-          src="./assets/screens/series-light.webp"
-          alt=""
-          width="720"
-          height="1600"
-          hidden
-        />
+        <img class="dialog-image" alt="" width="1440" height="3200" />
+        <img class="dialog-image" alt="" width="1440" height="3200" hidden />
       </div>
       <div class="dialog-navigation">
         <button
           type="button"
           class="icon-button expressive-button"
           data-dialog-direction="-1"
-          aria-label="上一张截图"
+          aria-label="{{dialog.previous}}"
         >
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#back"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#back"></use></svg>
         </button>
         <p class="dialog-count" aria-live="polite"></p>
         <button
           type="button"
           class="icon-button expressive-button"
           data-dialog-direction="1"
-          aria-label="下一张截图"
+          aria-label="{{dialog.next}}"
         >
-          <svg class="icon" aria-hidden="true"><use href="./assets/icons.svg#arrow"></use></svg>
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#arrow"></use></svg>
         </button>
       </div>
     </dialog>
+
+    <div class="snackbar" role="status" hidden>
+      <p class="snackbar-message"></p>
+      <a
+        class="snackbar-action expressive-button"
+        href="{{meta.alternateHref}}"
+        hreflang="{{meta.alternateLang}}"
+        lang="{{meta.alternateLang}}"
+        data-language-switch
+      ></a>
+      <button type="button" class="icon-button expressive-button snackbar-dismiss">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#close"></use></svg>
+      </button>
+    </div>
   </body>
 </html>

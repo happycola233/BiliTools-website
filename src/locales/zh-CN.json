@@ -1,0 +1,288 @@
+{
+  "meta": {
+    "lang": "zh-CN",
+    "ogLocale": "zh_CN",
+    "title": "BiliTools · 把喜欢的，留在身边",
+    "description": "BiliTools 是免费开源的 Android 哔哩哔哩解析与下载工具。保存视频、番剧、音乐与图文，自选音画质，导出字幕和弹幕，支持 13 种界面语言。",
+    "ogDescription": "从一条链接开始，收藏视频、番剧、音乐与图文。免费开源，为 Android 而生。",
+    "skipLink": "跳到主要内容",
+    "home": "BiliTools 首页",
+    "alternateHref": "en/",
+    "alternateLang": "en",
+    "alternateName": "English",
+    "alternateLabel": "Switch to English"
+  },
+  "nav": {
+    "label": "主要导航",
+    "features": "功能",
+    "screens": "界面",
+    "download": "下载",
+    "faq": "问答"
+  },
+  "header": {
+    "theme": "切换为深色模式",
+    "github": "在 GitHub 查看 BiliTools 源码（新标签页）"
+  },
+  "hero": {
+    "eyebrow": "免费开源 · 为 Android 而生",
+    "titleLead": "把喜欢的，<br>留在",
+    "titleAccent": "身边",
+    "titleTail": "。",
+    "description": "喜欢的视频、想听的音乐、值得再读的图文。<br>用 BiliTools 保存下来，想看时随时打开。",
+    "download": "下载 BiliTools",
+    "source": "查看源码",
+    "meta": "Android 10 及以上 · GPL-3.0 开源",
+    "scrollCue": "往下看看",
+    "visualLabel": "BiliTools 番剧解析、下载选项与下载任务界面",
+    "altOptions": "下载与导出面板，可选择画质、音质、字幕和弹幕",
+    "altAnime": "番剧解析页面，可查看作品信息并批量选择剧集",
+    "altDownloads": "下载任务按作品分组，显示实时进度"
+  },
+  "content": {
+    "label": "支持解析",
+    "video": "视频",
+    "anime": "番剧影视",
+    "course": "课程",
+    "audio": "音频歌单",
+    "article": "专栏图文",
+    "favorites": "收藏夹",
+    "later": "稍后再看",
+    "space": "用户空间"
+  },
+  "features": {
+    "eyebrow": "功能",
+    "title": "从一条链接，到完整收藏。",
+    "description": "解析、挑选、下载、整理，一个应用就够了。",
+    "share": {
+      "title": "分享即解析",
+      "description": "在 B 站或任意应用中选择「分享 → BiliTools」，弹出的面板里就能完成解析与下载，无需切换应用。也可以粘贴链接，或直接输入编号。",
+      "idsLabel": "支持的编号"
+    },
+    "quality": {
+      "title": "高规格音画质",
+      "description": "最高 8K、杜比视界与 HDR，Hi-Res 无损与杜比全景声，AVC、HEVC、AV1 编码按需选择。",
+      "note": "可选音画质取决于内容本身与账号权限。"
+    },
+    "export": {
+      "title": "完整导出",
+      "description": "字幕、AI 总结、当前与历史弹幕、NFO 元数据与封面海报；专栏图文保存为 Markdown，还能为音视频写入标签与封面。",
+      "formatsLabel": "导出格式"
+    },
+    "batch": {
+      "title": "批量下载，井井有条",
+      "description": "番剧选集、合集、收藏夹与歌单一次多选。任务按作品分组，进度实时可见，命名模板帮你把文件整理好。"
+    },
+    "languages": {
+      "title": "13 种界面语言",
+      "description": "所有语言随应用内置，切换即时生效；阿拉伯语采用从右到左布局。"
+    },
+    "privacy": {
+      "title": "数据留在你的设备上",
+      "description": "登录凭证、设置与下载记录只保存在本机；诊断报告由你预览后决定是否分享，不会自动上传。BiliTools 免费开源，代码公开可查。",
+      "action": "在 GitHub 查看源码"
+    }
+  },
+  "screens": {
+    "eyebrow": "界面",
+    "title": "先看看，用起来是什么样。",
+    "description": "熟悉的操作，顺手的体验。点击截图可放大查看。",
+    "tabsLabel": "选择要查看的界面",
+    "previous": "上一个界面",
+    "next": "下一个界面",
+    "parse": {
+      "title": "解析",
+      "description": "粘贴链接或输入编号，自动识别内容类型。",
+      "alt": "解析页，可粘贴链接或输入编号",
+      "zoom": "放大查看解析界面"
+    },
+    "anime": {
+      "title": "番剧与选集",
+      "description": "查看作品信息，按季、版本与分组批量勾选剧集。",
+      "alt": "番剧解析页面，显示作品信息与剧集列表",
+      "zoom": "放大查看番剧与选集界面"
+    },
+    "options": {
+      "title": "下载与导出",
+      "description": "选择输出类型、画质与音质，再把字幕、弹幕与元数据一起带走。",
+      "alt": "下载与导出面板，可选择输出类型、画质、字幕与弹幕",
+      "zoom": "放大查看下载与导出界面"
+    },
+    "details": {
+      "title": "详细信息",
+      "description": "编号、属性、声优与制作人员一目了然，可逐项复制。",
+      "alt": "详细信息页，列出内容编号、属性与制作信息",
+      "zoom": "放大查看详细信息界面"
+    },
+    "downloads": {
+      "title": "下载任务",
+      "description": "按作品分组，实时显示进度，随时暂停与继续。",
+      "alt": "下载任务页，按作品分组显示下载进度",
+      "zoom": "放大查看下载任务界面"
+    },
+    "history": {
+      "title": "历史记录",
+      "description": "按分类与时间浏览，支持搜索与多条件筛选。",
+      "alt": "历史记录页，显示观看进度与筛选入口",
+      "zoom": "放大查看历史记录界面"
+    },
+    "me": {
+      "title": "我",
+      "description": "个人资料、收藏夹与稍后再看，一键批量下载。",
+      "alt": "我的页面，显示个人资料、收藏夹与稍后再看入口",
+      "zoom": "放大查看我的页面"
+    },
+    "settings": {
+      "title": "设置",
+      "description": "通用、下载、命名与外观，按你的习惯来。",
+      "alt": "设置页，包含通用、下载、命名、外观与关于",
+      "zoom": "放大查看设置界面"
+    }
+  },
+  "appearance": {
+    "eyebrow": "外观",
+    "title": "好看，<br>也可以很像你。",
+    "description": "十三套原创配色，挑一款喜欢的。白天清爽，夜晚柔和，也可以跟随系统壁纸取色。圆润的控件与通透的液态玻璃，让每次打开都很舒服。",
+    "label": "13 套配色 · 浅色、深色与纯黑",
+    "region": "配色效果预览",
+    "previewTitle": "下载与导出",
+    "previewName": "蓝紫 · 日间",
+    "outputLabel": "输出类型",
+    "outputAudiovisual": "音视频",
+    "outputVideo": "仅视频",
+    "outputAudio": "仅音频",
+    "quality": "1080P · DASH",
+    "download": "下载",
+    "palettesLabel": "选择配色",
+    "modesLabel": "预览明暗模式",
+    "light": "日间清新",
+    "dark": "夜间舒适",
+    "hint": "选个颜色，看看效果",
+    "palettes": {
+      "periwinkle": "蓝紫",
+      "iris": "鸢尾",
+      "sky": "天蓝",
+      "lagoon": "湖蓝",
+      "seafoam": "薄荷",
+      "mint": "青苹",
+      "matcha": "抹茶",
+      "sand": "沙金",
+      "apricot": "蜜杏",
+      "coral": "珊瑚",
+      "sakura": "樱粉",
+      "orchid": "藕荷",
+      "lilac": "丁香"
+    }
+  },
+  "download": {
+    "eyebrow": "下载",
+    "title": "精彩不止在线。<br>现在，带走喜欢。",
+    "description": "下载 BiliTools，把想看的内容存到手机里。",
+    "mascot": "让小电视跳一下",
+    "releaseLabel": "已发布版本",
+    "releasedPrefix": "发布于",
+    "groupLabel": "下载 BiliTools",
+    "primary": "下载 BiliTools",
+    "chooseLabel": "选择安装包",
+    "packageLabel": "安装包",
+    "packageHint": "主流手机推荐 arm64-v8a，不确定时可选 universal 通用包。",
+    "retry": "重新检查",
+    "noscriptLead": "当前提供",
+    "noscriptTail": "的 arm64-v8a 安装包。选择其他安装包或查看新版，请前往",
+    "noscriptLink": "GitHub 发行版",
+    "noscriptEnd": "。",
+    "guideTitle": "开始之前",
+    "requirementTitle": "Android 10 及以上",
+    "requirementText": "手机与平板均可安装。",
+    "packagesTitle": "功能相同，适配不同设备",
+    "packagesText": "各安装包的功能一致，区别在于处理器架构和文件大小。通用包包含全部四种架构，需要更多下载流量。",
+    "updateTitle": "后续更新，在应用内完成",
+    "updateText": "打开「设置 → 关于 → 检查更新」，自动匹配适合设备的安装包。",
+    "releaseNotes": "更新记录",
+    "allReleases": "历史版本",
+    "repository": "项目仓库",
+    "installGuide": "安装说明",
+    "installGuideUrl": "https://github.com/happycola233/BiliTools#-安装"
+  },
+  "packages": {
+    "title": "选择安装包",
+    "hint": "功能相同，选择适合设备的版本。",
+    "recommended": "推荐",
+    "arm64": "64 位 ARM · 主流手机与平板",
+    "armv7": "32 位 ARM · 较早的设备",
+    "universal": "通用包 · 包含四种架构，体积较大",
+    "x86": "32 位 x86 · 部分模拟器与设备",
+    "x86_64": "64 位 x86 · 部分模拟器与设备",
+    "footer": "不确定设备架构？选择 universal 通用包。"
+  },
+  "faq": {
+    "eyebrow": "问答",
+    "title": "还有疑问？",
+    "description": "这里整理了大家常问的问题。没找到答案，欢迎",
+    "feedback": "在 GitHub 反馈",
+    "login": {
+      "question": "需要登录哔哩哔哩账号吗？",
+      "answer": "不登录也能解析和下载。登录后可选择账号支持的更多画质与音质，获取历史弹幕也需要登录。支持扫码、账号密码与短信验证码登录。"
+    },
+    "package": {
+      "question": "该下载哪个安装包？",
+      "answer": "主流手机与平板选择 arm64-v8a 即可。不确定设备架构时选择 universal 通用包，它包含全部四种架构，体积更大。各安装包的功能完全相同。"
+    },
+    "location": {
+      "question": "下载的文件保存在哪里？",
+      "answer": "默认保存在手机的 Download/BiliTools 文件夹。可在「设置 → 下载」中改为 Download 下的其他子目录，并在「设置 → 命名」中自定义文件夹与文件名。"
+    },
+    "quality": {
+      "question": "为什么有些画质或音质选不了？",
+      "answer": "可选的画质、音质和附加内容取决于视频或音频本身提供的内容，以及当前账号的权限。登录后可选择账号支持的更多画质与音质。"
+    },
+    "update": {
+      "question": "如何更新到新版本？",
+      "answer": "打开「设置 → 关于 → 检查更新」，应用会自动下载适合设备的安装包，并支持镜像加速。也可以随时回到本页下载最新版。"
+    },
+    "privacy": {
+      "question": "我的数据会被上传吗？",
+      "answer": "不会。登录凭证、设置与下载记录只保存在本机，应用不提供云端同步。诊断报告在本机生成，写入前隐藏登录凭据、IP 与账号 UID，由你预览后决定是否分享。"
+    }
+  },
+  "footer": {
+    "tagline": "一个免费开源的哔哩哔哩多媒体解析与下载工具。",
+    "productTitle": "产品",
+    "projectTitle": "项目",
+    "source": "源码",
+    "changelog": "更新日志",
+    "issues": "问题反馈",
+    "license": "GPL-3.0 许可",
+    "copyright": "© 2026 BiliTools contributors",
+    "disclaimer": "「哔哩哔哩」及「Bilibili」名称与标志是上海幻电信息科技有限公司的商标。本项目与哔哩哔哩及其关联公司无任何关联、合作、授权或背书关系。"
+  },
+  "dialog": {
+    "title": "应用界面",
+    "close": "关闭",
+    "previous": "上一张截图",
+    "next": "下一张截图"
+  },
+  "app": {
+    "themeToLight": "切换为浅色模式",
+    "themeToDark": "切换为深色模式",
+    "releaseLatest": "最新版本",
+    "releasePublished": "已发布版本",
+    "releaseChecking": "正在检查最新版本…",
+    "releaseNoAssets": "新版本已发布，安装包尚未上传。",
+    "releaseFailed": "暂时无法检查更新，可先下载 {version}，或稍后重试。",
+    "packageUnavailable": "此版本暂未提供 APK",
+    "packageNotProvided": "暂未提供",
+    "packageBytes": "{size} 字节",
+    "downloadLabel": "下载 {name}",
+    "paletteLight": "日间",
+    "paletteDark": "夜间",
+    "qualityAudiovisual": "1080P · DASH",
+    "qualityVideo": "1080P · 无音轨",
+    "qualityAudio": "192K · M4A",
+    "previewDownload": "下载",
+    "celebrate": "好耶",
+    "celebrateMessage": "送你一份{name}色的好心情！",
+    "languageSuggestion": "本页面也有中文版。",
+    "languageSuggestionAction": "切换到中文",
+    "dismiss": "关闭"
+  }
+}
