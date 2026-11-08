@@ -11,6 +11,13 @@ const buildRoot = path.join(websiteRoot, 'dist');
 const sprite = await readFile(path.join(buildRoot, 'assets/icons.svg'), 'utf8');
 const pagePaths = PAGES.map(({ entry }) => path.join(buildRoot, entry));
 
+/** animation 简写中除动画名以外可能出现的关键字。 */
+const ANIMATION_KEYWORDS = new Set(
+  'none infinite linear ease ease-in ease-out ease-in-out step-start step-end normal reverse alternate alternate-reverse forwards backwards both running paused initial inherit unset'.split(
+    ' ',
+  ),
+);
+
 /** srcset 中每个候选的地址（去掉 720w 等宽度描述）。 */
 const srcsetUrls = (value) => value.split(',').map((candidate) => candidate.trim().split(/\s+/)[0]);
 
@@ -69,6 +76,15 @@ for (const [index, pagePath] of pagePaths.entries()) {
     // 压缩后若只剩 -webkit- 前缀，Chrome 与 Firefox 会丢失模糊；开发服务不压缩，看不出这类问题。
     for (const [rule] of css.matchAll(/\{[^{}]*-webkit-backdrop-filter:[^{}]*\}/g))
       assert.ok(/[{;]backdrop-filter:/.test(rule), `CSS lost unprefixed backdrop-filter: ${rule}`);
+    // 引用了不存在的 @keyframes 时动画静默失效，不报任何错误。
+    const keyframes = new Set([...css.matchAll(/@keyframes ([\w-]+)/g)].map((match) => match[1]));
+    for (const [, value] of css.matchAll(/[{;]animation(?:-name)?:([^;}]+)/g)) {
+      const names = value
+        .replace(/[\w-]+\([^()]*\)/g, ' ')
+        .split(/[\s,]+/)
+        .filter((token) => /^-?[a-z][\w-]*$/i.test(token) && !ANIMATION_KEYWORDS.has(token));
+      for (const name of names) assert.ok(keyframes.has(name), `CSS animation has no @keyframes: ${name}`);
+    }
   }
 }
 

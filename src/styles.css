@@ -204,9 +204,13 @@
   --gutter: clamp(16px, 4vw, 48px);
   --header-clearance: 96px;
   --section-space: clamp(72px, 9vw, 120px);
+  /* 中文只列系统自带、字重齐全的字体。手动安装的字体（如 HarmonyOS Sans、MiSans）常缺粗体，
+     或被 Windows 拆成多个家族；下方 font-synthesis: none 又不会伪造粗体，标题会显得很细。
+     依次对应：Windows 10/11（2025 年起随系统更新提供 Noto）、macOS / iOS、Linux、
+     较旧的 Windows；Android 由 sans-serif 交给系统字体。 */
   font-family:
-    'Google Sans Flex', 'HarmonyOS Sans SC', 'MiSans', 'PingFang SC', 'Noto Sans SC',
-    'Microsoft YaHei', sans-serif;
+    'Google Sans Flex', 'Noto Sans SC', 'PingFang SC', 'Noto Sans CJK SC', 'Source Han Sans SC',
+    'Microsoft YaHei UI', 'Microsoft YaHei', sans-serif;
   /* ROND=100 已固化进 WOFF2，与 App 的圆角品牌变体一致。 */
   font-variation-settings: 'ROND' 100;
   font-synthesis: none;
@@ -1527,10 +1531,15 @@ h1 {
   /* 与 App 关于页一致，白色品牌底座独立旋转，不带动小电视。 */
   background: #fff;
   mask: url('/assets/cookie-nine.svg') center / contain no-repeat;
-  animation: shape-spin 24s linear infinite paused;
+  animation: mascot-base-spin 24s linear infinite paused;
 }
 .download-mascot.is-visible::before {
   animation-play-state: running;
+}
+@keyframes mascot-base-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 .download-mascot img {
   /* 沿用 App 关于页的 46:64 画布比例，保留图标与九瓣轮廓之间的留白。 */
@@ -2263,7 +2272,7 @@ h1 {
 }
 @media (max-width: 639px) {
   :root {
-    --header-clearance: 84px;
+    --header-clearance: 100px;
   }
   .top-app-bar {
     top: 8px;
@@ -2271,11 +2280,24 @@ h1 {
     min-height: 60px;
     padding: 8px 8px 8px 14px;
   }
+  /* 手机上两个按钮并排成一组：主按钮占满剩余宽度，「查看源码」保持自身宽度。 */
   .hero-actions {
-    width: 100%;
+    container: hero-actions / inline-size;
+    flex-wrap: nowrap;
+    gap: 8px;
   }
   .hero-actions .button {
-    flex: 1 1 100%;
+    padding-inline: 20px;
+  }
+  .hero-actions .button-filled {
+    flex: 1 1 auto;
+  }
+  /* 截图紧接着在下方露出，手机上不再需要「往下看看」。 */
+  .scroll-cue {
+    display: none;
+  }
+  .hero-visual {
+    margin-top: 36px;
   }
   .content-strip ul {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2314,6 +2336,26 @@ h1 {
   }
   .footer-bottom {
     flex-direction: column;
+  }
+}
+/* 一行放不下两个带文字的按钮时，「查看源码」收成圆形图标按钮（链接的 aria-label 仍是完整文字）。
+   阈值取两个按钮的实测总宽：中文约 314px，英文标签更长，约 388px。 */
+@container hero-actions (width < 316px) {
+  .hero-actions .button-tonal {
+    width: 56px;
+    padding: 0;
+  }
+  .hero-actions .button-tonal span {
+    display: none;
+  }
+}
+@container hero-actions (width < 390px) {
+  :lang(en) .hero-actions .button-tonal {
+    width: 56px;
+    padding: 0;
+  }
+  :lang(en) .hero-actions .button-tonal span {
+    display: none;
   }
 }
 @media (max-width: 400px) {
