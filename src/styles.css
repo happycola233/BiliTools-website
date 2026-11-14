@@ -425,7 +425,10 @@ button:disabled {
 /* ───────────────────────── Expressive 按钮 ───────────────────────── */
 
 .expressive-button {
-  --button-current-shape: var(--button-shape, 999px);
+  /* 每种按钮都要用 --button-shape 写明具体圆角，胶囊形取高度的一半，这里刻意不给默认值。
+     不能用 999px 之类的超大值：圆角超出盒子时会按比例缩到半高，过渡中的数值大部分时间仍大于半高，
+     悬停形变会被拖到最后才出现，移开时又在第一帧就跳回胶囊形。 */
+  --button-current-shape: var(--button-shape);
   border-radius: var(--button-current-shape);
   user-select: none;
   -webkit-user-select: none;
@@ -1365,11 +1368,12 @@ h1 {
   white-space: nowrap;
 }
 .palette-preview-download {
+  --button-shape: 22px;
   display: inline-flex;
   min-height: 44px;
   align-items: center;
   gap: 6px;
-  padding: 12px 20px;
+  padding: 0 20px;
   background: var(--palette-primary-fixed-dim);
   color: var(--palette-on-primary-fixed);
   font-size: 0.875rem;
